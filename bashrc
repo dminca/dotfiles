@@ -136,3 +136,9 @@ export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 # Set default editor
 export EDITOR='subl'
+
+# Run TMUX by default instead of Terminal
+# If not running interactively, do not do anything
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux
+
