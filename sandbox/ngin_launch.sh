@@ -1,6 +1,18 @@
 #!/bin/bash
 # Launch MarketsWorld engines
 
+## Define global variables
+APP="cd $HOME/Projects/application/"
+SDI="cd $HOME/Projects/stream-dispatcher/"
+MWC="cd $HOME/Projects/mwd-comm"
+MKD="cd $HOME/Projects/market-data"
+DRT="cd $HOME/Projects/data-retention"
+GME="cd $HOME/Projects/game"
+REN="cd $HOME/Projects/resolve"
+EXP="cd $HOME/Projects/expiry"
+WDG="cd $HOME/Projects/watchdog"
+# END global vars
+
 # Create window 1
 	# Run server thin
 	# Add horizontal pane
