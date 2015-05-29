@@ -1,0 +1,24 @@
+Session 0:
+Window 1:MEMORY
+	pane 0: 271x17
+	pane-horizontal 1: 271x63
+
+Window 2:LOGGER
+	pane 0: 271x81
+
+Window 3:ENGINES
+	pane 0: 135x22
+	pane-horizontal 1: 135x22
+	pane-horizontal 2: 135x22
+	pane-horizontal 3: 135x22
+	pane-vertical 4: 135x22
+	pane-vertical 5: 135x22
+	pane-vertical 6: 135x22
+	pane-vertical 7: 135x22
+
+Window 4:GIT COMMIT
+	pane0: 150x81
+	pane-vertical 1: 120x81 (script/dbconsole)
+
+Window 5:CONSOLE
+	pane 0: script/console --sandbox
