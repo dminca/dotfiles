@@ -1,0 +1,12 @@
+# LOCATION: /usr/share/application/sublime_handler.desktop
+[Desktop Entry]
+Name=Sublime Text 3
+Version=1.0
+Exec=/usr/bin/sublime_handler %u
+Icon=sublime-text
+Terminal=false
+Type=Application
+Categories=Development;
+StartupNotify=true
+MimeType=x-scheme-handler/subl;
+
