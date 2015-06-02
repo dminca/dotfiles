@@ -34,7 +34,7 @@ request=${request/&line=/:}   # Replace &line= with :
 request=${request/&column=/:} # Replace &column= with :
 
 # Launch sublime
-sublime $request       # Launch ST2
+subl $request       # Launch ST2
 ```
 
 Make the url handler executable: `sudo chmod +x /usr/bin/subl-urlhandler`.
