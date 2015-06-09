@@ -1,6 +1,6 @@
 ####################################################
 ##### SETUP MY DEVELOPMENT ENVIRONMENT #############
-######### By Daniel aka Daniel Bourne ##############
+######### author: Minca Daniel Andrei  #############
 ####################################################
 
 ##### DOWNLOAD LINUX
