@@ -45,12 +45,9 @@ syntax enable
 colorscheme desert
 set background=dark
 
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions+=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+" Display vim colors properly on ubuntu
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
