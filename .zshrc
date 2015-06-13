@@ -6,7 +6,6 @@ export ZSH=/home/daniel/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
-# ZSH_THEME="bira"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -50,7 +49,7 @@ plugins=()
 
 # User configuration
 
-export PATH="/home/daniel/.local/bin:/home/daniel/.local/bin:/usr/local/rvm/gems/ruby-2.2.0/bin:/usr/local/rvm/gems/ruby-2.2.0@global/bin:/usr/local/rvm/rubies/ruby-2.2.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/rvm/bin"
+export PATH="/home/daniel/.rvm/gems/ruby-2.2.1/bin:/home/daniel/.rvm/gems/ruby-2.2.1@global/bin:/home/daniel/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/daniel/.rvm/bin:/home/daniel/.rvm/bin:/home/daniel/.rvm/bin:/home/daniel/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -77,8 +76,8 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mousepad ~/.zshrc"
-# alias ohmyzsh="mousepad ~/.oh-my-zsh"
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
 	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -96,7 +95,11 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias lsl='ls -lsa'
-                             
+
+# GIT aliases
+alias gs='git status --short'
+alias glg="git log --graph --pretty=format:'%Cred%h%Creset-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit"
+alias giff='git diff'
 
 # Run Tmux by default in terminal
 # If not running interactively, do not do anything
