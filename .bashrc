@@ -92,13 +92,23 @@ alias l='ls -CF'
 alias lsl='ls -lsa'
 
 # git magic-tricks
-alias gits='git status -s'
+# alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gs='git status -s'
 alias glo='git log --oneline --decorate --graph --all'
 alias gli='git branch --list'
 alias giff='git diff'
+alias gm='git mergetool -t meld'
 
-# cleaning shit
-alias cl='clear'
+# Launching the engines for marketsworld application
+alias e0="cd ~/Projects/application && bundle exec script/server thin | egrep -v 'SELECT (\"tags\"|tags\\.\\*)|\\* FROM \"(recurring_closures|market_closures|markets|suspend_entries|app_texts|translations|promotions)\" WHERE'"
+alias e1='cd ~/Projects/stream-dispatcher && node server.js'
+alias e2='cd ~/Projects/mwd-comm && node app.js'
+alias e3='cd ~/Projects/market-data && bundle exec bin/market-data'
+alias e4='cd ~/Projects/data-retention && bundle exec bin/data-retention'
+alias e5='cd ~/Projects/game && bundle exec bin/game-engine'
+alias e6='cd ~/Projects/resolve && bundle exec bin/resolve-engine'
+alias e7='cd ~/Projects/expiry && bundle exec bin/expiry-engine'
+alias e8='cd ~/Projects/watchdog && bundle exec bin/watchdog'
 
 #alias rm=’rm -I’
 
@@ -141,4 +151,4 @@ export EDITOR='subl'
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
-
+# [ -z "$TMUX" ] && export TERM=xterm-256color
