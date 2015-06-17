@@ -1,8 +1,8 @@
-## The git Plugin
+## Daniel's Hacked Git Plugin
 
-The [git](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/git) plugin provides many [aliases](#Aliases) and a few useful [functions](#Functions).
+The [original git](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/git) plugin provides many [aliases](#Aliases) and a few useful [functions](#Functions).
 
-Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template#L48) before sourcing OMZ (see [[Plugins]]).
+Enable it by adding _dangit_ to the [_plugins array_](https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template#L48) before sourcing OMZ (see [[Plugins]]).
 
 ## Aliases
 
@@ -14,7 +14,6 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | gapa                 | git add --patch                                                                                                                         |
 | gb                   | git branch                                                                                                                              |
 | gba                  | git branch -a                                                                                                                           |
-| gbda                 | git branch --merged \| command grep -vE "^(\*\|\s*master\s*$)" \| command xargs -n 1 git branch -d                                      |
 | gbl                  | git blame -b -w                                                                                                                         |
 | gbnm                 | git branch --no-merged                                                                                                                  |
 | gbr                  | git branch --remote                                                                                                                     |
@@ -32,13 +31,13 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | gcf                  | git config --list                                                                                                                       |
 | gcl                  | git clone --recursive                                                                                                                   |
 | gclean               | git reset --hard && git clean -dfx                                                                                                      |
-| gcm                  | git checkout master                                                                                                                     |
+| gcs                  | git checkout staging                                                                                                                    |
 | gcmsg                | git commit -m                                                                                                                           |
 | gco                  | git checkout                                                                                                                            |
 | gcount               | git shortlog -sn                                                                                                                        |
 | gcp                  | git cherry-pick                                                                                                                         |
 | gcs                  | git commit -S                                                                                                                           |
-| gd                   | git diff                                                                                                                                |
+| giff                 | git diff                                                                                                                                |
 | gdca                 | git diff --cached                                                                                                                       |
 | gdt                  | git diff-tree --no-commit-id --name-only -r                                                                                             |
 | gdw                  | git diff --word-diff                                                                                                                    |
@@ -53,7 +52,6 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | ggsup                | git branch --set-upstream-to = origin/$(current_branch)                                                                                 |
 | gignore              | git update-index --assume-unchanged                                                                                                     |
 | gignored             | git ls-files -v \| grep "^[[:lower:]]"                                                                                                  |
-| git-svn-dcommit-push | git svn dcommit && git push github master:svntrunk                                                                                      |
 | gk                   | \gitk --all --branches                                                                                                                  |
 | gke                  | \gitk --all $(git log -g --pretty = format:%h)                                                                                          |
 | gl                   | git pull                                                                                                                                |
@@ -68,10 +66,8 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | glola                | git log --graph --pretty = format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all |
 | glp                  | _git_log_prettily                                                                                                                       |
 | gm                   | git merge                                                                                                                               |
-| gmom                 | git merge origin/master                                                                                                                 |
 | gmt                  | git mergetool --no-prompt                                                                                                               |
 | gmtvim               | git mergetool --no-prompt --tool = vimdiff                                                                                              |
-| gmum                 | git merge upstream/master                                                                                                               |
 | gp                   | git push                                                                                                                                |
 | gpd                  | git push --dry-run                                                                                                                      |
 | gpoat                | git push origin --all && git push origin --tags                                                                                         |
@@ -83,7 +79,6 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | grba                 | git rebase --abort                                                                                                                      |
 | grbc                 | git rebase --continue                                                                                                                   |
 | grbi                 | git rebase -i                                                                                                                           |
-| grbm                 | git rebase master                                                                                                                       |
 | grbs                 | git rebase --skip                                                                                                                       |
 | grh                  | git reset HEAD                                                                                                                          |
 | grhh                 | git reset HEAD --hard                                                                                                                   |
@@ -95,11 +90,9 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | grup                 | git remote update                                                                                                                       |
 | grv                  | git remote -v                                                                                                                           |
 | gsb                  | git status -sb                                                                                                                          |
-| gsd                  | git svn dcommit                                                                                                                         |
 | gsi                  | git submodule init                                                                                                                      |
 | gsps                 | git show --pretty = short --show-signature                                                                                              |
-| gsr                  | git svn rebase                                                                                                                          |
-| gss                  | git status -s                                                                                                                           |
+| gs                   | git status -s                                                                                                                           |
 | gst                  | git status                                                                                                                              |
 | gsta                 | git stash                                                                                                                               |
 | gstaa                | git stash apply                                                                                                                         |
@@ -115,7 +108,6 @@ Enable it by adding _git_ to the [_plugins array_](https://github.com/robbyrusse
 | gupv                 | git pull --rebase -v                                                                                                                    |
 | gvt                  | git verify-tag                                                                                                                          |
 | gwch                 | git whatchanged -p --abbrev-commit --pretty = medium                                                                                    |
-| gwip                 | git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit -m "--wip--"                                                      |
 
 ## Deprecated Aliases
 
@@ -134,7 +126,6 @@ These are aliases that have been removed, renamed, or otherwise modified in a wa
 | glg    | git log --stat --max-count = 10                                                    | now aliased to `git log --stat --color`                                                             |
 | glgg   | git log --graph --max-count = 10                                                   | now aliased to `git log --graph --color`                                                            |
 | gwc    | git whatchanged -p --abbrev-commit --pretty = medium                               | new alias `gwch`                                                                                    |
-| gwip   | git add -A; git ls-files --deleted -z \| xargs -r0 git rm; git commit -m "--wip--" | now aliased to `git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit -m "--wip--"` |
 
 ## Functions
 
@@ -144,14 +135,4 @@ These are aliases that have been removed, renamed, or otherwise modified in a wa
 |:-------------------|:----------------------------------------|
 | current_branch     | Return the name of the current branch   |
 | current_repository | Return the names of the current remotes |
-
-### WiP
-
-These features allow to pause a branch development and switch to another one (_"Work in Progress"_,  or wip). When you want to go back to work, just unwip it.
-
-| Command          | Description                                     |
-|:-----------------|:------------------------------------------------|
-| work_in_progress | Echoes a warning if the current branch is a wip |
-| gwip             | Commit wip branch                               |
-| gunwip           | Uncommit wip branch                             |
 
