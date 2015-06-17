@@ -33,12 +33,6 @@ function _git_log_prettily(){
     git log --pretty=$1
   fi
 }
-# Warn if the current branch is a WIP
-function work_in_progress() {
-  if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    echo "WIP!!"
-  fi
-}
 
 #
 # Aliases
@@ -136,7 +130,7 @@ alias gru='git reset --'
 alias grup='git remote update'
 alias grv='git remote -v'
 
-alias gsb='git status -sb'
+alias gs='git status -sb'
 alias gsi='git submodule init'
 alias gsps='git show --pretty=short --show-signature'
 alias gss='git status -s'
