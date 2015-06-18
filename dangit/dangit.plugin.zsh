@@ -159,3 +159,4 @@ alias gupv='git pull --rebase -v'
 alias gvt='git verify-tag'
 
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
+
