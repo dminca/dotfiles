@@ -1,3 +1,15 @@
+#       _             _      _ _    
+#    __| | __ _ _ __ (_) ___| ( )__ 
+#   / _` |/ _` | '_ \| |/ _ \ |/ __|
+#  | (_| | (_| | | | | |  __/ |\__ \
+#   \__,_|\__,_|_| |_|_|\___|_||___/
+#                                   
+#   _               _               
+#  | |__   __ _ ___| |__  _ __ ___  
+#  | '_ \ / _` / __| '_ \| '__/ __| 
+#  | |_) | (_| \__ \ | | | | | (__  
+#  |_.__/ \__,_|___/_| |_|_|  \___| 
+#                                   
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -136,7 +148,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-. /home/tibi/.gitrc
+. /home/daniel/.gitrc
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
