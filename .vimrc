@@ -53,7 +53,7 @@ map <Leader>n :NERDTreeToggle<CR>
 " Enable syntax highlighting
 syntax enable
 
-colorscheme desert
+colorscheme evening
 set background=dark
 
 " Set extra options when running in GUI mode
