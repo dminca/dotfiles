@@ -56,7 +56,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=()
+plugins=(dangit)
 
 # User configuration
 
@@ -107,10 +107,8 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lsl='ls -lsa'
 
-# GIT aliases
-alias gs='git status --short'
-alias glg="git log --graph --pretty=format:'%Cred%h%Creset-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit"
-alias giff='git diff'
+# Personalised aliases
+alias wtf='alias | egrep' # loop through available aliases
 
 # Run Tmux by default in terminal
 # If not running interactively, do not do anything
