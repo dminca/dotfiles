@@ -10,7 +10,7 @@
 #/___||___/|_| |_||_|   \___|            
 #                                        
 # Path to your oh-my-zsh installation.
-export ZSH=/home/daniel/.oh-my-zsh
+export ZSH=/home/$USER/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -60,7 +60,7 @@ plugins=(dangit)
 
 # User configuration
 
-export PATH="/home/daniel/.rvm/gems/ruby-2.2.1/bin:/home/daniel/.rvm/gems/ruby-2.2.1@global/bin:/home/daniel/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/daniel/.rvm/bin:/home/daniel/.rvm/bin:/home/daniel/.rvm/bin:/home/daniel/.rvm/bin"
+export PATH="/home/$USER/.rvm/gems/ruby-2.2.1/bin:/home/$USER/.rvm/gems/ruby-2.2.1@global/bin:/home/$USER/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/$USER/.rvm/bin:/home/$USER/.rvm/bin:/home/$USER/.rvm/bin:/home/$USER/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
