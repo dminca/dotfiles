@@ -115,3 +115,5 @@ alias wtf='alias | egrep' # loop through available aliases
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
 
+# Include RVM in zsh path
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
