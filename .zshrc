@@ -107,8 +107,14 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lsl='ls -lsa'
 
-# Personalised aliases
-alias wtf='alias | egrep' # loop through available aliases
+#========= PERSONALISED ALIASES ======================================================
+alias wtf='alias | egrep' 
+
+# loop through available aliases
+alias count='find . -type f | wc -l'
+
+# print Public IP address
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 # Run Tmux by default in terminal
 # If not running interactively, do not do anything
