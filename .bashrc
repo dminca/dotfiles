@@ -14,6 +14,9 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Load aliases
+. ~/.aliases
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -96,33 +99,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias lsl='ls -lsa'
-
-# git magic-tricks
-# alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias gs='git status -s'
-alias glo='git log --oneline --decorate --graph --all'
-alias gli='git branch --list'
-alias giff='git diff'
-alias gm='git mergetool -t meld'
-
-# Launching the engines for marketsworld application
-alias e0="cd ~/Projects/application && bundle exec script/server thin | egrep -v 'SELECT (\"tags\"|tags\\.\\*)|\\* FROM \"(recurring_closures|market_closures|markets|suspend_entries|app_texts|translations|promotions)\" WHERE'"
-alias e1='cd ~/Projects/stream-dispatcher && node server.js'
-alias e2='cd ~/Projects/mwd-comm && node app.js'
-alias e3='cd ~/Projects/market-data && bundle exec bin/market-data'
-alias e4='cd ~/Projects/data-retention && bundle exec bin/data-retention'
-alias e5='cd ~/Projects/game && bundle exec bin/game-engine'
-alias e6='cd ~/Projects/resolve && bundle exec bin/resolve-engine'
-alias e7='cd ~/Projects/expiry && bundle exec bin/expiry-engine'
-alias e8='cd ~/Projects/watchdog && bundle exec bin/watchdog'
-
-#alias rm=’rm -I’
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
