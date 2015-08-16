@@ -121,7 +121,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-. /home/$USER/.gitrc
+if [ -f ~/.gitrc ]; then
+  . /home/$USER/.gitrc
+fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -130,7 +132,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 
 # Set default editor
-export EDITOR='subl'
+export EDITOR='vim'
 
 # Run TMUX by default instead of Terminal
 # If not running interactively, do not do anything
