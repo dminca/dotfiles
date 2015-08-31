@@ -26,3 +26,4 @@ data.location=~/.task
 #include /usr/share/task/dark-gray-256.theme
 weekstart=Monday
 color.blocking=red on white
+journal.time=yes
