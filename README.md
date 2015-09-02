@@ -30,7 +30,8 @@ sudo make install
 mkdir -p ~/.vim/autoload ~/.vim/bundle && 
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ```
->The arguments ``-LSso`` are translated into:
+>
+The arguments ``-LSso`` are translated into:
 * L, --location      Follow redirects (H)
 * S, --show-error    Show error. With -s, make curl show errors when they occur
 * s, --silent        Silent mode. Don't output anything
@@ -40,7 +41,7 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ### nerdtree with vundle
 ``cd ~/.vim/bundle && git clone https://github.com/scrooloose/nerdtree.git``
 
-Then reload vim, run :Helptags, and check out :help NERD_tree.txt.
+Then reload vim, run ``:Helptags``, and check out ``:help NERD_tree.txt``.
 
 ### SnipMate for vim
 ```
