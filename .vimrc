@@ -54,6 +54,10 @@ set mat=2
 " Map specific key or shortcut to open NERDTree
 map <Leader>n :NERDTreeToggle<CR>
 
+" resize vim splits
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
