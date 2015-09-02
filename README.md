@@ -59,3 +59,7 @@ git clone https://github.com/completit/dotfiles.git ~/Downloads &&
 cd ~/Downloads/dotfiles && 
 cp -v .vimrc .tmux.conf .bashrc .bash_aliases ~/
 ```
+
+#### In case your drunk and forget how to configure vim-snippets or any other tools
+Useful links and tuts:
+* (Vim Essential Plugin: SnipMate - Tuts+ Code Tutorial)[http://code.tutsplus.com/tutorials/vim-essential-plugin-snipmate--net-19356]
