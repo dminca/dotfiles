@@ -22,8 +22,15 @@ filetype plugin indent on
 let mapleader = ","
 
 " Enable line numbers in NERDTree
-let NERDTreeShowLineNumbers=1
+"let NERDTreeShowLineNumbers=1
 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+"let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+
+set backupdir=~/vimBackups/
+set directory=~/vimBackups/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,3 +109,4 @@ function! HasPaste()
   en
   return ''
 endfunction
+
