@@ -1,9 +1,9 @@
-## Personal System Build instructions
+# Daniels Personal System Build instructions
 >
 Just a simple repo with Ubuntu building instructions for a humble devel.
 >
 
-# Aptitude packages
+### Aptitude packages
 ```
 sudo apt-get update && sudo apt-get install -y git \
                                               tmux \
@@ -18,14 +18,14 @@ sudo apt-get update && sudo apt-get install -y git \
                                               python-gpgme
 ```
 
-# tasksh (taskwarrior shell)
+### tasksh (taskwarrior shell)
 ```
 git clone https://git.tasktools.org/scm/ex/tasksh.git && 
 cd tasksh && cmake -DCMAKE_BUILD_TYPE=release && 
 make && 
 sudo make install
 ```
-# prepare vundle for vim
+### prepare vundle for vim
 ```
 mkdir -p ~/.vim/autoload ~/.vim/bundle && 
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
@@ -37,12 +37,12 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 * o, --output FILE   Write output to <file> instead of stdout
 >
 
-# nerdtree with vundle
+### nerdtree with vundle
 ``cd ~/.vim/bundle && git clone https://github.com/scrooloose/nerdtree.git``
 
 Then reload vim, run :Helptags, and check out :help NERD_tree.txt.
 
-# SnipMate for vim
+### SnipMate for vim
 ```
 cd ~/.vim/bundle && 
 git clone https://github.com/tomtom/tlib_vim.git && 
@@ -52,7 +52,7 @@ mkdir -v ~/.vim/snippets &&
 cd ~/.vim/snippets
 ```
 
-# bashrc
+### bashrc
 ```
 git clone https://github.com/completit/dotfiles.git ~/Downloads &&
 cd ~/Downloads/dotfiles && 
