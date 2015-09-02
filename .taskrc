@@ -27,3 +27,5 @@ data.location=~/.task
 weekstart=Monday
 color.blocking=red on white
 journal.time=yes
+dateformat.report=d/m/Y H:N:S
+dateformat.annotation=d/m/Y H:N:S
