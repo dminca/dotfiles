@@ -60,6 +60,18 @@ cd ~/Downloads/dotfiles &&
 cp -v .vimrc .tmux.conf .bashrc .bash_aliases ~/
 ```
 
+### Configure vim backups and zsh plugins
+```
+mkdir ~/vimBackups/ &&
+rm -v ~/.oh-my-zsh/custom ~/.vim/snippets &&
+cp -vr ~/Downloads/dotfiles/custom ~/.oh-my-zsh/ &&
+cp -vr ~/Downloads/dotfiles/snippets ~/.vim/
+```
+
+* The first line creates a ``vimBackups`` dir to store all vim backups
+* 2nd line removes custom directory so the error that 'dir already exists' would be avoided when running 3rd and 4th line (from above)
+* 4th line copies vim snippets
+
 #### In case your drunk and forget how to configure vim-snippets or any other tools
 Useful links and tuts:
 * [Vim Essential Plugin: SnipMate - Tuts+ Code Tutorial](http://code.tutsplus.com/tutorials/vim-essential-plugin-snipmate--net-19356)
