@@ -53,6 +53,13 @@ mkdir -v ~/.vim/snippets &&
 cd ~/.vim/snippets
 ```
 
+### Install CtrlP for vim
+
+```
+cd ~/.vim &&
+git clone https://github.com/kien/ctrlp.vim.git bundle/ctrlp.vim
+```
+
 ### bashrc
 ```
 git clone https://github.com/completit/dotfiles.git ~/Downloads &&
