@@ -20,10 +20,11 @@ sudo apt-get update && sudo apt-get install -y git \
 
 ### tasksh (taskwarrior shell)
 ```
-git clone https://git.tasktools.org/scm/ex/tasksh.git && 
-cd tasksh && cmake -DCMAKE_BUILD_TYPE=release && 
-make && 
-sudo make install
+$ git clone https://git.tasktools.org/scm/ex/tasksh.git
+$ cd tasksh
+$ cmake .
+$ make
+$ sudo make install
 ```
 ### prepare vundle for vim
 ```
