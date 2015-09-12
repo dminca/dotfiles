@@ -64,7 +64,7 @@ installTask() {
 dotfilesConfig() {
 	git clone git@github.com:completit/dotfiles.git $DOTFILES_PATH
   
-  cp $DOTFILES_PATH/.vimrc \
+  cp -f $DOTFILES_PATH/.vimrc \
      $DOTFILES_PATH/.bashrc \
      $DOTFILES_PATH/.tmux.conf \
      $DOTFILES_PATH/.taskrc \
