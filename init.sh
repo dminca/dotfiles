@@ -20,7 +20,9 @@ setupLibs() {
 												  python-gpgme \
 												  gnome-disk-utility \
 												  usb-creator-kde \
-                          unrar
+                          unrar \
+                          postgresql \
+                          postgresql-contrib
 }
 
 setupVim() {
@@ -50,9 +52,9 @@ setupVim() {
 }
 
 installTask() {
-	git clone https://git.tasktools.org/scm/ex/tasksh.git $HOME/Downloads/tasksh
+	git clone https://git.tasktools.org/scm/ex/tasksh.git $HOME/tasksh
 	
-	cd $HOME/Downloads/tasksh
+	cd $HOME/tasksh
 	cmake .
 	
 	make
@@ -74,12 +76,29 @@ dotfilesConfig() {
   cp -R $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
 }
 
+setupRvm() {
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+
+  curl -sSL https://get.rvm.io | bash -s stable --ruby=2.2
+
+  # use ruby-2.2 with a gemset of rails-4.2
+  `rvm use ruby-2.2.1@rails424 --create do gem install rails -v 4.2.4`
+}
+
+cleanBullshit() {
+  rm -rf $HOME/dotfiles \
+         $HOME/tasksh
+
+}
+
 # main command to put the system up
 powerOn() {
   setupLibs
   setupVim
   installTask
   dotfilesConfig
+  setupRvm
+  cleanBullshit
 }
 
 $@
