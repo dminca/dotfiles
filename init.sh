@@ -19,7 +19,8 @@ setupLibs() {
 												  xclip \
 												  python-gpgme \
 												  gnome-disk-utility \
-												  usb-creator-kde
+												  usb-creator-kde \
+                          unrar
 }
 
 setupVim() {
