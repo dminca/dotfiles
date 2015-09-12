@@ -63,12 +63,12 @@ installTask() {
 dotfilesConfig() {
 	git clone git@github.com:completit/dotfiles.git $DOTFILES_PATH
   
-  cp .vimrc \
-     .bashrc \
-     .tmux.conf \
-     .taskrc \
-     .bash_aliases \
-     .gemrc $HOME/
+  cp $DOTFILES_PATH/.vimrc \
+     $DOTFILES_PATH/.bashrc \
+     $DOTFILES_PATH/.tmux.conf \
+     $DOTFILES_PATH/.taskrc \
+     $DOTFILES_PATH/.bash_aliases \
+     $DOTFILES_PATH/.gemrc $HOME/
 
   cp -R $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
 }
