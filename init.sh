@@ -5,6 +5,7 @@ DOTFILES_PATH=$HOME/dotfiles
 
 # Install libraries
 setupLibs() {
+  sudo add-apt-repository ppa:webupd8team/java
 	sudo apt-get update &&
 	sudo apt-get install -y vim \
 												  git \
@@ -25,7 +26,9 @@ setupLibs() {
                           postgresql-contrib \
                           nodejs \
                           npm \
-                          tree
+                          tree \
+                          oracle-java8-installer \
+                          oracle-java8-set-default
 }
 
 setupVim() {
