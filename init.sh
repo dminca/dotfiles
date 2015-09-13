@@ -24,7 +24,8 @@ setupLibs() {
                           postgresql \
                           postgresql-contrib \
                           nodejs \
-                          npm
+                          npm \
+                          tree
 }
 
 setupVim() {
