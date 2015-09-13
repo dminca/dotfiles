@@ -22,7 +22,9 @@ setupLibs() {
 												  usb-creator-kde \
                           unrar \
                           postgresql \
-                          postgresql-contrib
+                          postgresql-contrib \
+                          nodejs \
+                          npm
 }
 
 setupVim() {
