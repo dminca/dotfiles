@@ -88,7 +88,7 @@ setupRvm() {
   curl -sSL https://get.rvm.io | bash -s stable --ruby=2.2
 
   # use ruby-2.2 with a gemset of rails-4.2
-  `rvm use ruby-2.2.1@rails424 --create do gem install rails -v 4.2.4`
+  rvm use ruby-2.2.1@rails424 --create
 }
 
 cleanBullshit() {
