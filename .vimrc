@@ -40,6 +40,10 @@ set number
 " Highlight search results
 set hlsearch
 
+" Show 'invisible' characters
+set lcs=tab:\ \ ,trail:·,nbsp:_
+set list
+
 " For regular expressions turn magic on
 set magic
 
