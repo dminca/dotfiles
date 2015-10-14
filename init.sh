@@ -70,7 +70,7 @@ installTask() {
 }
 
 dotfilesConfig() {
-	git clone git@github.com:completit/dotfiles.git $DOTFILES_PATH
+	git clone git@github.com:dminca/dotfiles.git $DOTFILES_PATH
   
   cp -f $DOTFILES_PATH/.vimrc \
      $DOTFILES_PATH/.bashrc \
