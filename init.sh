@@ -28,7 +28,8 @@ setupLibs() {
                           npm \
                           tree \
                           oracle-java8-installer \
-                          oracle-java8-set-default
+                          oracle-java8-set-default \
+                          sublime-text=3065
 }
 
 setupVim() {
