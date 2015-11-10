@@ -1,0 +1,3 @@
+#!/bin/sh
+
+avahi-browse -tl _workstation._tcp
