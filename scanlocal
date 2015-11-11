@@ -1,3 +1,11 @@
 #!/bin/sh
 
-avahi-browse -tl _workstation._tcp
+scan() {
+  avahi-browse -tl _workstation._tcp
+}
+
+ports() {
+  sudo netstat -tulpn | grep LISTEN
+}
+
+"$@"
