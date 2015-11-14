@@ -19,11 +19,16 @@ sudo apt-get update && sudo apt-get install -y git \
 ```
 
 ### tasksh (taskwarrior shell)
+Download the latest archive from the [official repo](https://git.tasktools.org/projects/EX/repos/tasksh) or just download the [tarball](http://taskwarrior.org/download/tasksh-latest.tar.gz)
 ```
-$ git clone https://git.tasktools.org/scm/ex/tasksh.git
-$ cd tasksh
-$ cmake .
+$ ls
+task-2.5.0.tar.gz
+$ tar xzvf task-2.5.0.tar.gz
+$ cd task-2.5.0
+$ cmake -DCMAKE_BUILD_TYPE=release .
+...
 $ make
+...
 $ sudo make install
 ```
 ### prepare vundle for vim
