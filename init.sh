@@ -8,11 +8,12 @@ VIM_PATH=$HOME/.vim/
 DOTFILES_PATH=$HOME/dotfiles
 
 # Install libraries
-setupLibs() {
+installPkgs() {
   sudo add-apt-repository ppa:webupd8team/java
 	sudo apt-get update &&
 	sudo apt-get install -y vim \
 												  git \
+                          git-flow \
 												  tmux \
 												  openvpn \
 												  openssh-server \
@@ -57,12 +58,12 @@ breakline() {
   echo "${DRAW_LINE}${NL}${TXT}${NL}${DRAW_LINE}"
   echo ""
 }
-# ---- end helper func.
+# ---- end helper func. -------------------
 
 # setup docker
-setupDocker() {
+installDocker() {
 
-	breakline "Setup Docker"
+	breakline "Installing Docker"
 		
 	# Install  docker
 	curl -sSL https://get.docker.com/ | sh
@@ -76,15 +77,15 @@ setupDocker() {
 
 }
 
-setupVim() {
-  breakline "Create vim paths"
+installVim() {
+  breakline "Creating vim paths"
 
 	mkdir -p $VIM_PATH/autoload \
 					 $VIM_PATH/bundle \
 					 $VIM_PATH/snippets \
 					 $HOME/vimBackups
 					 
-  breakline "Pull VIM repositories"
+  breakline "Pulling VIM repositories"
 
 	# Pathogen
 	curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
@@ -105,10 +106,12 @@ setupVim() {
 }
 
 installTask() {
-  breakline "Install tasksh by taskwarrior"
+  breakline "Installing tasksh by taskwarrior"
 
   wget http://taskwarrior.org/download/tasksh-latest.tar.gz --directory-prefix=$HOME/Downloads
-  
+
+  cd $HOME/Downloads
+
   tar xvf tasksh-latest.tar.gz
 
   cd tasksh-*
@@ -120,10 +123,12 @@ installTask() {
   make
 
   xitsts sudo make install
+
+  cd $HOME
 }
 
-dotfilesConfig() {
-  breakline "Cloning and copying dotfiles"
+installDotfiles() {
+  breakline "Copying and configuring dotfiles"
 
 	git clone git@github.com:dminca/dotfiles.git $DOTFILES_PATH
   
@@ -138,33 +143,49 @@ dotfilesConfig() {
   cp $DOTFILES_PATH/.tmux.conf $DOTFILES_PATH/shells/.vimrc $DOTFILES_PATH/shells/.taskrc $HOME/
 }
 
-setupRvm() {
-  breakline "Install RVM"
+installChrome() {
 
-  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+	breakline "Installing Google Chrome"
 
-  curl -sSL https://get.rvm.io | bash -s stable --ruby=2.2
+	# Install dependencies
+	sudo apt-get -y install \
+		libxss1 \
+		libappindicator1 \
+		libindicator7
 
-  # use ruby-2.2 with a gemset of rails-4.2
-  rvm use ruby-2.2.1@rails424 --create
+	# Fetch the Chrome acrhive
+	sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+	# Install Chrome
+	sudo dpkg -i google-chrome*.deb
+
+	# Cleanup
+	sudo rm -f google-chrome-stable_current_amd64.deb
+
 }
 
-cleanBullshit() {
+installRvm() {
+  echo "[\e[1m\e[33mDeprecated] Will be replaced with Docker container environment"
+}
+
+clearInstall() {
   breakline "Cleaning after installation"
   rm -rf $HOME/dotfiles \
          $HOME/Downloads/tasksh-*
 
 }
 
+
 # main command to put the system up
 init() {
-  setupLibs
-  setupVim
+  installPkgs
+  installChrome
+  installVim
   installTask
-  dotfilesConfig
-  setupDocker
-  setupRvm
-  cleanBullshit
+  installDotfiles
+  installDocker
+  installRvm
+  clearInstall
 }
 
 "$@"
