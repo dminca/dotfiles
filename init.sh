@@ -165,7 +165,7 @@ installChrome() {
 }
 
 installRvm() {
-  echo "[\e[1m\e[33mDeprecated] Will be replaced with Docker container environment"
+  echo -e "\e[1m\e[33m[Deprecated] \e[0mWill be replaced with Docker container environment"
 }
 
 clearInstall() {
