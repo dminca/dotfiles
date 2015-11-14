@@ -32,14 +32,56 @@ setupLibs() {
                           sublime-text=3065
 }
 
+# --------- Helper Functions ------------
+xitsts() {
+  "$@"
+
+  local status=$?
+
+  if [ $status -ne 0 ]; then
+    echo "Error: exited with status code $1" >&2
+  fi
+
+  return $status
+}
+
+breakline() {
+  TXT="----| ${1} |----"
+  TXT_LENGTH=$(expr length "${TXT}")
+  NL=$'\n'
+  DRAW_LINE=$(repeatChar $TXT_LENGTH "--")
+  echo "${DRAW_LINE}${NL}${TXT}${NL}${DRAW_LINE}"
+  echo ""
+}
+# ---- end helper func.
+
+# setup docker
+setupDocker() {
+
+	breakline "Setup Docker"
+		
+	# Install  docker
+	curl -sSL https://get.docker.com/ | sh
+	sudo usermod -aG docker $USER
+
+
+	# Install docker-compose
+	sudo chown -R $(whoami) /usr/local/bin
+	curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+	chmod +x /usr/local/bin/docker-compose
+
+}
+
 setupVim() {
-	# create vim paths
+  breakline "Create vim paths"
+
 	mkdir -p $VIM_PATH/autoload \
 					 $VIM_PATH/bundle \
 					 $VIM_PATH/snippets \
 					 $HOME/vimBackups
 					 
-	# ------ PULL VIM PLUGINS -------
+  breakline "Pull VIM repositories"
+
 	# Pathogen
 	curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 	
@@ -59,18 +101,26 @@ setupVim() {
 }
 
 installTask() {
-	git clone https://git.tasktools.org/scm/ex/tasksh.git $HOME/tasksh
-	
-	cd $HOME/tasksh
-	cmake .
-	
-	make
-	sudo make install
+  breakline "Install tasksh by taskwarrior"
+
+  wget http://taskwarrior.org/download/tasksh-latest.tar.gz --directory-prefix=$HOME/Downloads
   
-  cd
+  tar xvf tasksh-latest.tar.gz
+
+  cd tasksh-*
+
+  cmake -DCMAKE_BUILD_TYPE=release .
+
+  sleep 2
+
+  make
+
+  xitsts sudo make install
 }
 
 dotfilesConfig() {
+  breakline "Cloning and copying dotfiles"
+
 	git clone git@github.com:dminca/dotfiles.git $DOTFILES_PATH
   
   cp -f $DOTFILES_PATH/.vimrc \
@@ -81,9 +131,12 @@ dotfilesConfig() {
      $DOTFILES_PATH/.gemrc $HOME/
 
   cp -R $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
+  cp $DOTFILES_PATH/.tmux.conf $DOTFILES_PATH/shells/.vimrc $DOTFILES_PATH/shells/.taskrc $HOME/
 }
 
 setupRvm() {
+  breakline "Install RVM"
+
   gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 
   curl -sSL https://get.rvm.io | bash -s stable --ruby=2.2
@@ -93,8 +146,9 @@ setupRvm() {
 }
 
 cleanBullshit() {
+  breakline "Cleaning after installation"
   rm -rf $HOME/dotfiles \
-         $HOME/tasksh
+         $HOME/Downloads/tasksh-*
 
 }
 
@@ -104,6 +158,7 @@ powerOn() {
   setupVim
   installTask
   dotfilesConfig
+  setupDocker
   setupRvm
   cleanBullshit
 }
