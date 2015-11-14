@@ -1,4 +1,8 @@
 #!/bin/bash
+# Script that sets up the developer environment
+# Copyright (C) 2015 Minca Daniel Andrei - All Rights Reserved
+# Permission to copy and modify is granted under the GPL V2 license
+# Last revised 14/11/2015
 
 VIM_PATH=$HOME/.vim/
 DOTFILES_PATH=$HOME/dotfiles
@@ -153,7 +157,7 @@ cleanBullshit() {
 }
 
 # main command to put the system up
-powerOn() {
+init() {
   setupLibs
   setupVim
   installTask
@@ -163,4 +167,4 @@ powerOn() {
   cleanBullshit
 }
 
-$@
+"$@"
