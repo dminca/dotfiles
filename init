@@ -54,8 +54,7 @@ breakline() {
   TXT="----| ${1} |----"
   TXT_LENGTH=$(expr length "${TXT}")
   NL=$'\n'
-  DRAW_LINE=$(repeatChar $TXT_LENGTH "--")
-  echo "${DRAW_LINE}${NL}${TXT}${NL}${DRAW_LINE}"
+  echo "${NL}${TXT}${NL}"
   echo ""
 }
 # ---- end helper func. -------------------
