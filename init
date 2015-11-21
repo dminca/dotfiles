@@ -50,7 +50,7 @@ breakline() {
   TXT="----| ${1} |----"
   TXT_LENGTH=$(expr length "${TXT}")
   NL=$'\n'
-  echo "${NL}${TXT}${NL}"
+  echo -e "\e[96m${NL}${TXT}${NL}"
   echo ""
 }
 # ---- end helper func. -------------------
@@ -170,6 +170,25 @@ installFont() {
   wget --directory-prefix=$HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
   unzip Hack-v2_018-ttf.zip
   rm -rfv Hack-v2_018-ttf.zip
+}
+
+# @todo add in main function
+installOffice() {
+  breakline "Setting up LibreOffice"
+
+  wget --directory-prefix=$HOME/Downloads http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz
+  
+  tar xvf $HOME/Downloads/LibreOffice_5.0.3_Linux_x86_deb.tar.gz
+
+  cd $HOME/Downloads/LibreOffice_5.0.3_Linux_x86_deb/DEBS/
+
+  sudo dpkg -i *.deb
+
+  cd $HOME
+}
+
+installVirtualbox() {
+  echo -e "\e[33m[Work in Progress] \e[39mVirtualBox installation..."
 }
 
 clearInstall() {
