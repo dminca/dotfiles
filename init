@@ -6,6 +6,8 @@
 
 VIM_PATH=$HOME/.vim/
 DOTFILES_PATH=$HOME/dotfiles
+DOWNLOADS_DIR=$HOME/Downloads
+OFFICE_URL=
 
 # Install libraries
 installPkgs() {
@@ -51,7 +53,7 @@ breakline() {
   TXT_LENGTH=$(expr length "${TXT}")
   NL=$'\n'
   echo -e "\e[96m${NL}${TXT}${NL}"
-  echo ""
+  echo -e "\e[39m"
 }
 # ---- end helper func. -------------------
 
@@ -103,9 +105,9 @@ installVim() {
 installTask() {
   breakline "Installing tasksh by taskwarrior"
 
-  wget http://taskwarrior.org/download/tasksh-latest.tar.gz --directory-prefix=$HOME/Downloads
+  wget http://taskwarrior.org/download/tasksh-latest.tar.gz --directory-prefix=$DOWNLOADS_DIR
 
-  cd $HOME/Downloads
+  cd $DOWNLOADS_DIR
 
   tar xvf tasksh-latest.tar.gz
 
@@ -175,26 +177,27 @@ installFont() {
 # @todo add in main function
 installOffice() {
   breakline "Setting up LibreOffice"
+  OFFICE="LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
 
-  wget --directory-prefix=$HOME/Downloads http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz
-  
-  tar xvf $HOME/Downloads/LibreOffice_5.0.3_Linux_x86_deb.tar.gz
+  if [ -e $DOWNLOADS_DIR/$OFFICE ]; then
+    echo -e "\e[91m[Error] | \e[39mFile already exists...clean directory and try again"
+  else
+    wget -P $DOWNLOADS_DIR http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz
+    
+    tar xvf $DOWNLOADS_DIR/LibreOffice_5.0.3_Linux_x86_deb.tar.gz -C $DOWNLOADS_DIR
 
-  cd $HOME/Downloads/LibreOffice_5.0.3_Linux_x86_deb/DEBS/
-
-  sudo dpkg -i *.deb
-
-  cd $HOME
+    sudo dpkg -i $DOWNLOADS_DIR/LibreOffice_5.0.3.2_Linux_x86_deb/DEBS/*.deb
+  fi
 }
 
 installVirtualbox() {
-  echo -e "\e[33m[Work in Progress] \e[39mVirtualBox installation..."
+  echo -e "\e[33m[Work in Progress] \e[39mVirtualBox installation should be here..."
 }
 
 clearInstall() {
   breakline "Cleaning after installation"
   rm -rf $HOME/dotfiles \
-         $HOME/Downloads/tasksh-*
+         $DOWNLOADS_DIR/tasksh-*
 
 }
 
