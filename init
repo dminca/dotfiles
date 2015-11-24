@@ -204,6 +204,7 @@ clearInstall() {
 
 # main command to put the system up
 init() {
+	# important installs
   installPkgs
   installChrome
   installVim
@@ -211,6 +212,12 @@ init() {
   installDotfiles
   installDocker
   installRvm
+
+	# other installs
+	installOffice
+	installFont
+
+	# maintenance
   clearInstall
 }
 
