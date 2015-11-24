@@ -130,15 +130,14 @@ installDotfiles() {
 
 	git clone git@github.com:dminca/dotfiles.git $DOTFILES_PATH
   
-  cp -f $DOTFILES_PATH/.vimrc \
+  cp -fv $DOTFILES_PATH/shells/.vimrc \
+     $DOTFILES_PATH/shells/.taskrc \
      $DOTFILES_PATH/.bashrc \
      $DOTFILES_PATH/.tmux.conf \
-     $DOTFILES_PATH/.taskrc \
      $DOTFILES_PATH/.bash_aliases \
      $DOTFILES_PATH/.gemrc $HOME/
 
-  cp -R $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
-  cp $DOTFILES_PATH/.tmux.conf $DOTFILES_PATH/shells/.vimrc $DOTFILES_PATH/shells/.taskrc $HOME/
+  cp -Rv $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
 }
 
 installChrome() {
@@ -163,6 +162,8 @@ installChrome() {
 }
 
 installRvm() {
+  breakline "Installing RVM"
+
   echo -e "\e[1m\e[33m[Deprecated] \e[0mRVM installation will be replaced with Docker container environment"
 }
 
@@ -170,9 +171,8 @@ installFont() {
   breakline "Pulling the Hack font"
 
   mkdir -p $HOME/.fonts/truetype
-  wget --directory-prefix=$HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
-  unzip Hack-v2_018-ttf.zip
-  rm -rfv Hack-v2_018-ttf.zip
+  wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
+  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
 }
 
 # @todo add in main function
@@ -196,9 +196,11 @@ installVirtualbox() {
 
 clearInstall() {
   breakline "Cleaning after installation"
-  rm -rf $HOME/dotfiles \
+
+  rm -rfv $DOTFILES_PATH \
          $DOWNLOADS_DIR/tasksh-* \
-         $DOWNLOADS_DIR/$OFFARCH_NAME
+         $DOWNLOADS_DIR/$OFFARCH_NAME \
+         $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
 }
 
 
