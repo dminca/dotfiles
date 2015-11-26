@@ -204,6 +204,20 @@ installVirtualbox() {
   echo -e "\e[95m[Work in Progress] \e[39mVirtualBox installation should be here..."
 }
 
+installSublime() {
+  breakline "Installing Sublime Text 3 build 3065"
+
+  wget -P $DOWNLOADS_DIR http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
+
+  sudo dpkg -i $DOWNLOADS_DIR/sublime-text_build-3065_amd64.deb
+
+  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text http://cl.ly/1z0S25150Y0I/sublime_text%20crack%20linux%2064%20build%203065
+
+  chmod u+x $DOWNLOADS_DIR/sublime_text
+
+  sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
+}
+
 clearInstall() {
   breakline "Cleaning after installation"
 
@@ -226,6 +240,7 @@ init() {
   installDotfiles
   installDocker
   installRvm
+  installSublime
 
 	# other installs
 	installOffice
