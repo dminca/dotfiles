@@ -34,7 +34,8 @@ installPkgs() {
                           postgresql-contrib \
                           nodejs \
                           npm \
-                          tree
+                          tree \
+                          audacious
 }
 
 # --------- Helper Functions ------------
