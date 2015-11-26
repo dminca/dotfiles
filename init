@@ -9,6 +9,7 @@ DOTFILES_PATH=$HOME/dotfiles
 DOWNLOADS_DIR=$HOME/Downloads
 OFFARCH_NAME="LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
 OFFICE_URL="http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
+DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 
 # Install libraries
 installPkgs() {
@@ -190,6 +191,14 @@ installOffice() {
   fi
 }
 
+installDropbox() {
+  breakline "Installing Dropbox"
+
+  wget -P $DOWNLOADS_DIR https://linux.dropbox.com/packages/ubuntu/$DROPBOX_VERSION
+
+  sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
+}
+
 installVirtualbox() {
   echo -e "\e[95m[Work in Progress] \e[39mVirtualBox installation should be here..."
 }
@@ -200,7 +209,9 @@ clearInstall() {
   rm -rfv $DOTFILES_PATH \
          $DOWNLOADS_DIR/tasksh-* \
          $DOWNLOADS_DIR/$OFFARCH_NAME \
-         $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
+         $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
+         $DOWNLOADS_DIR/$DROPBOX_VERSION
+  cd $HOME
 }
 
 
@@ -218,6 +229,7 @@ init() {
 	# other installs
 	installOffice
 	installFont
+  installDropbox
 
 	# maintenance
   clearInstall
