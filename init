@@ -218,6 +218,19 @@ installSublime() {
   sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
 }
 
+installNode() {
+  breakline "Installing Node (latest)"
+
+  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
+
+  tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz
+
+  sudo cp -vr $DOWNLOADS_DIR/node-v5.1.0-linux-x64/* /usr/local/
+
+  # TODO: call the function to check whether the install was a success
+  # or not. If successful show message, else show error.
+}
+
 clearInstall() {
   breakline "Cleaning after installation"
 
@@ -241,6 +254,7 @@ init() {
   installDocker
   installRvm
   installSublime
+  installNode
 
 	# other installs
 	installOffice
