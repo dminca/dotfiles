@@ -9,6 +9,7 @@ DOTFILES_PATH=$HOME/dotfiles
 DOWNLOADS_DIR=$HOME/Downloads
 OFFARCH_NAME="LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
 OFFICE_URL="http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
+DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 
 # Install libraries
 installPkgs() {
@@ -33,7 +34,8 @@ installPkgs() {
                           postgresql-contrib \
                           nodejs \
                           npm \
-                          tree
+                          tree \
+                          audacious
 }
 
 # --------- Helper Functions ------------
@@ -130,15 +132,14 @@ installDotfiles() {
 
 	git clone git@github.com:dminca/dotfiles.git $DOTFILES_PATH
   
-  cp -f $DOTFILES_PATH/.vimrc \
+  cp -fv $DOTFILES_PATH/shells/.vimrc \
+     $DOTFILES_PATH/shells/.taskrc \
      $DOTFILES_PATH/.bashrc \
      $DOTFILES_PATH/.tmux.conf \
-     $DOTFILES_PATH/.taskrc \
      $DOTFILES_PATH/.bash_aliases \
      $DOTFILES_PATH/.gemrc $HOME/
 
-  cp -R $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
-  cp $DOTFILES_PATH/.tmux.conf $DOTFILES_PATH/shells/.vimrc $DOTFILES_PATH/shells/.taskrc $HOME/
+  cp -Rv $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
 }
 
 installChrome() {
@@ -163,6 +164,8 @@ installChrome() {
 }
 
 installRvm() {
+  breakline "Installing RVM"
+
   echo -e "\e[1m\e[33m[Deprecated] \e[0mRVM installation will be replaced with Docker container environment"
 }
 
@@ -170,9 +173,8 @@ installFont() {
   breakline "Pulling the Hack font"
 
   mkdir -p $HOME/.fonts/truetype
-  wget --directory-prefix=$HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
-  unzip Hack-v2_018-ttf.zip
-  rm -rfv Hack-v2_018-ttf.zip
+  wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
+  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
 }
 
 # @todo add in main function
@@ -190,20 +192,60 @@ installOffice() {
   fi
 }
 
+installDropbox() {
+  breakline "Installing Dropbox"
+
+  wget -P $DOWNLOADS_DIR https://linux.dropbox.com/packages/ubuntu/$DROPBOX_VERSION
+
+  sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
+}
+
 installVirtualbox() {
   echo -e "\e[95m[Work in Progress] \e[39mVirtualBox installation should be here..."
 }
 
+installSublime() {
+  breakline "Installing Sublime Text 3 build 3065"
+
+  wget -P $DOWNLOADS_DIR http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
+
+  sudo dpkg -i $DOWNLOADS_DIR/sublime-text_build-3065_amd64.deb
+
+  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text http://cl.ly/1z0S25150Y0I/sublime_text%20crack%20linux%2064%20build%203065
+
+  chmod u+x $DOWNLOADS_DIR/sublime_text
+
+  sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
+}
+
+installNode() {
+  breakline "Installing Node (latest)"
+
+  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
+
+  tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz
+
+  sudo cp -vr $DOWNLOADS_DIR/node-v5.1.0-linux-x64/* /usr/local/
+
+  # TODO: call the function to check whether the install was a success
+  # or not. If successful show message, else show error.
+}
+
 clearInstall() {
   breakline "Cleaning after installation"
-  rm -rf $HOME/dotfiles \
+
+  rm -rfv $DOTFILES_PATH \
          $DOWNLOADS_DIR/tasksh-* \
-         $DOWNLOADS_DIR/$OFFARCH_NAME
+         $DOWNLOADS_DIR/$OFFARCH_NAME \
+         $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
+         $DOWNLOADS_DIR/$DROPBOX_VERSION
+  cd $HOME
 }
 
 
 # main command to put the system up
 init() {
+	# important installs
   installPkgs
   installChrome
   installVim
@@ -211,6 +253,15 @@ init() {
   installDotfiles
   installDocker
   installRvm
+  installSublime
+  installNode
+
+	# other installs
+	installOffice
+	installFont
+  installDropbox
+
+	# maintenance
   clearInstall
 }
 
