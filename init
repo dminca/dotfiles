@@ -253,8 +253,8 @@ init() {
   installDotfiles
   #installDocker
   installRvm
-  #installSublime
-  #installNode
+  installSublime
+  installNode
 
 	# other installs
 	#installOffice
