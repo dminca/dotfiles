@@ -182,15 +182,10 @@ installFont() {
 installOffice() {
   breakline "Setting up LibreOffice"
 
-  if [ -e $DOWNLOADS_DIR/$OFFARCH_NAME ]; then
-    echo -e "\e[91m[Error] | \e[39mFile already exists...clean directory and try again"
-  else
-    wget -P $DOWNLOADS_DIR $OFFICE_URL
-    
-    tar xvf $DOWNLOADS_DIR/LibreOffice_5.0.3_Linux_x86_deb.tar.gz -C $DOWNLOADS_DIR
+  apt-get install libreoffice
 
-    sudo dpkg -i $DOWNLOADS_DIR/LibreOffice_5.0.3.2_Linux_x86_deb/DEBS/*.deb
-  fi
+  add-apt-repository ppa:libreoffice/ppa
+  apt-get update
 }
 
 installDropbox() {
