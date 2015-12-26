@@ -249,15 +249,15 @@ init() {
   installPkgs
   installChrome
   installVim
-  installTask
+  #installTask
   installDotfiles
-  installDocker
+  #installDocker
   installRvm
-  installSublime
-  installNode
+  #installSublime
+  #installNode
 
 	# other installs
-	installOffice
+	#installOffice
 	installFont
   installDropbox
 
