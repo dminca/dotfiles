@@ -18,7 +18,9 @@ xitsts() {
   local status=$?
 
   if [ $status -ne 0 ]; then
-    echo "Error: exited with status code $1" >&2
+    echo -e "\e[91m[Error: exited with status code $1]\e[0m" >&2
+  else
+    echo -e "\e[92m[No errors during installation]\e[0m"
   fi
 
   return $status
@@ -61,6 +63,9 @@ installPkgs() {
                           silversearcher-ag
 }
 
+  xitsts
+}
+
 # setup docker
 installDocker() {
 
@@ -75,7 +80,8 @@ installDocker() {
 	sudo chown -R $(whoami) /usr/local/bin
 	curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 	chmod +x /usr/local/bin/docker-compose
-
+  
+  xitsts
 }
 
 installVim() {
@@ -123,7 +129,8 @@ installTask() {
 
   make
 
-  xitsts sudo make install
+  sudo make install
+  xitsts
 
   cd $HOME
 }
@@ -141,6 +148,8 @@ installDotfiles() {
      $DOTFILES_PATH/.gemrc $HOME/
 
   cp -Rv $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
+
+  xitsts
 }
 
 installChrome() {
@@ -161,7 +170,8 @@ installChrome() {
 
 	# Cleanup
 	sudo rm -f google-chrome-stable_current_amd64.deb
-
+  
+  xitsts
 }
 
 installRvm() {
@@ -176,16 +186,25 @@ installFont() {
   mkdir -p $HOME/.fonts/truetype
   wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
   unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
+
+  xitsts
 }
 
 # @todo add in main function
 installOffice() {
   breakline "Setting up LibreOffice"
 
-  apt-get install libreoffice
+  if [ -e $DOWNLOADS_DIR/$OFFARCH_NAME ]; then
+    echo -e "\e[91m[Error] | \e[39mFile already exists...clean directory and try again"
+  else
+    wget -P $DOWNLOADS_DIR $OFFICE_URL
+    
+    tar xvf $DOWNLOADS_DIR/LibreOffice_5.0.3_Linux_x86_deb.tar.gz -C $DOWNLOADS_DIR
 
-  add-apt-repository ppa:libreoffice/ppa
-  apt-get update
+    sudo dpkg -i $DOWNLOADS_DIR/LibreOffice_5.0.3.2_Linux_x86_deb/DEBS/*.deb
+  fi
+
+  xitsts
 }
 
 installDropbox() {
@@ -194,6 +213,8 @@ installDropbox() {
   wget -P $DOWNLOADS_DIR https://linux.dropbox.com/packages/ubuntu/$DROPBOX_VERSION
 
   sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
+
+  xitsts
 }
 
 installVirtualbox() {
@@ -212,6 +233,8 @@ installSublime() {
   chmod u+x $DOWNLOADS_DIR/sublime_text
 
   sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
+
+  xitsts
 }
 
 installNode() {
@@ -225,27 +248,8 @@ installNode() {
 
   # TODO: call the function to check whether the install was a success
   # or not. If successful show message, else show error.
-}
 
-# extra packages for design
-themePaper() {
-  breakline "Installing Paper theme and Icon pack"
-
-  sudo add-apt-repository -y ppa:snwh/pulp
-
-  sudo apt-get update
-
-  sudo apt-get install paper-gtk-theme paper-icon-theme
-}
-
-themeNumix() {
-  breakline "Installing Numix themne and Icon pack"
-
-  sudo apt-add-repository -y ppa:numix/ppa
-
-  sudo apt-get update
-
-  sudo apt-get install numix-icon-theme numix-icon-theme-circle
+  xitsts
 }
 
 clearInstall() {
@@ -256,6 +260,9 @@ clearInstall() {
          $DOWNLOADS_DIR/$OFFARCH_NAME \
          $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
          $DOWNLOADS_DIR/$DROPBOX_VERSION
+  
+  xitsts
+
   cd $HOME
 }
 
@@ -280,6 +287,8 @@ init() {
 
 	# maintenance
   clearInstall
+
+  xitsts
 }
 
 "$@"
