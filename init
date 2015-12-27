@@ -11,33 +11,6 @@ OFFARCH_NAME="LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
 OFFICE_URL="http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 
-# Install libraries
-installPkgs() {
-	sudo apt-get update &&
-	sudo apt-get install -y vim \
-												  git \
-                          git-flow \
-												  tmux \
-												  openvpn \
-												  openssh-server \
-												  task \
-												  cmake \
-												  curl \
-												  keepass2 \
-												  xdotool \
-												  xclip \
-												  python-gpgme \
-												  gnome-disk-utility \
-												  usb-creator-kde \
-                          unrar \
-                          postgresql \
-                          postgresql-contrib \
-                          nodejs \
-                          npm \
-                          tree \
-                          audacious
-}
-
 # --------- Helper Functions ------------
 xitsts() {
   "$@"
@@ -59,6 +32,33 @@ breakline() {
   echo -e "\e[39m"
 }
 # ---- end helper func. -------------------
+
+# Install libraries
+installPkgs() {
+	sudo apt-get update &&
+	sudo apt-get install -y vim \
+												  git \
+                          git-flow \
+												  tmux \
+												  openvpn \
+												  openssh-server \
+												  task \
+												  cmake \
+												  curl \
+												  keepass2 \
+												  xdotool \
+												  xclip \
+												  python-gpgme \
+												  gnome-disk-utility \
+												  #usb-creator-kde \
+                          unrar \
+                          postgresql \
+                          postgresql-contrib \
+                          nodejs \
+                          npm \
+                          tree \
+                          audacious
+}
 
 # setup docker
 installDocker() {
