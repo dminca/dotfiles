@@ -231,6 +231,27 @@ installNode() {
   # or not. If successful show message, else show error.
 }
 
+# extra packages for design
+themePaper() {
+  breakline "Installing Paper theme and Icon pack"
+
+  sudo add-apt-repository -y ppa:snwh/pulp
+
+  sudo apt-get update
+
+  sudo apt-get install paper-gtk-theme paper-icon-theme
+}
+
+themeNumix() {
+  breakline "Installing Numix themne and Icon pack"
+
+  sudo apt-add-repository -y ppa:numix/ppa
+
+  sudo apt-get update
+
+  sudo apt-get install numix-icon-theme numix-icon-theme-circle
+}
+
 clearInstall() {
   breakline "Cleaning after installation"
 
