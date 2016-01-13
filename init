@@ -185,7 +185,7 @@ installFont() {
 
   mkdir -p $HOME/.fonts/truetype
   wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
-  unzip -dv $HOME/.fonts/truetype/Hack-v2_018-ttf.zip $HOME/.fonts/truetype
+  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
 
   xitsts
 }
