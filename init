@@ -7,8 +7,6 @@
 VIM_PATH=$HOME/.vim/
 DOTFILES_PATH=$HOME/dotfiles
 DOWNLOADS_DIR=$HOME/Downloads
-OFFARCH_NAME="LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
-OFFICE_URL="http://download.documentfoundation.org/libreoffice/stable/5.0.3/deb/x86/LibreOffice_5.0.3_Linux_x86_deb.tar.gz"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 
 # --------- Helper Functions ------------
@@ -190,23 +188,6 @@ installFont() {
   xitsts
 }
 
-# @todo add in main function
-installOffice() {
-  breakline "Setting up LibreOffice"
-
-  if [ -e $DOWNLOADS_DIR/$OFFARCH_NAME ]; then
-    echo -e "\e[91m[Error] | \e[39mFile already exists...clean directory and try again"
-  else
-    wget -P $DOWNLOADS_DIR $OFFICE_URL
-    
-    tar xvf $DOWNLOADS_DIR/LibreOffice_5.0.3_Linux_x86_deb.tar.gz -C $DOWNLOADS_DIR
-
-    sudo dpkg -i $DOWNLOADS_DIR/LibreOffice_5.0.3.2_Linux_x86_deb/DEBS/*.deb
-  fi
-
-  xitsts
-}
-
 installDropbox() {
   breakline "Installing Dropbox"
 
@@ -281,7 +262,6 @@ init() {
   installNode
 
 	# other installs
-	#installOffice
 	installFont
   installDropbox
 
