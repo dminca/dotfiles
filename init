@@ -59,7 +59,6 @@ installPkgs() {
                           tree \
                           audacious \
                           silversearcher-ag
-}
 
   xitsts
 }
