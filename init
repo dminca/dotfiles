@@ -136,7 +136,7 @@ installTask() {
 installDotfiles() {
   breakline "Copying and configuring dotfiles"
 
-	git clone git@github.com:dminca/dotfiles.git $DOTFILES_PATH
+	git clone https://github.com/dminca/dotfiles.git $DOTFILES_PATH
   
   cp -fv $DOTFILES_PATH/shells/.vimrc \
      $DOTFILES_PATH/shells/.taskrc \
