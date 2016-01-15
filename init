@@ -4,21 +4,32 @@
 # Permission to copy and modify is granted under the GPL V2 license
 # Last revised 14/11/2015
 
-VIM_PATH=$HOME/.vim/
-DOTFILES_PATH=$HOME/dotfiles
-DOWNLOADS_DIR=$HOME/Downloads
+VIM_PATH="$HOME/.vim/"
+REPO_PATH="$HOME/dotfiles"
+DOTFILES_PATH="$REPO_PATH/dotfiles/"
+DOWNLOADS_DIR="$HOME/Downloads"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 
 # --------- Helper Functions ------------
+# ---- COLORS ----
+# Example usage format:
+# printf "$COLOR" "text"
+light_blue='\e[1;94m%s\e[0m\n'
+light_red='\e[1;91m%s\e[0m\n'
+light_green='\e[1;92m%s\e[0m\n'
+light_cyan='\e[1;96m%s\e[0m\n'
+
+# -- endcolors --
+
 xitsts() {
   "$@"
 
   local status=$?
 
   if [ $status -ne 0 ]; then
-    echo -e "\e[91m[Error: exited with status code $1]\e[0m" >&2
+    printf "$light_red" "[Error: exited with status code $1]"
   else
-    echo -e "\e[92m[No errors during installation]\e[0m"
+    printf "$light_green" "[No errors during installation]"
   fi
 
   return $status
@@ -28,9 +39,28 @@ breakline() {
   TXT="----| ${1} |----"
   TXT_LENGTH=$(expr length "${TXT}")
   NL=$'\n'
-  echo -e "\e[96m${NL}${TXT}${NL}"
-  echo -e "\e[39m"
+  printf "$light_cyan" "${NL}${TXT}${NL}"
 }
+
+display_usage() {
+  printf "$light_blue" "Usage: [arguments]"
+  printf "$light_blue" "installPkgs      install binaries"
+  printf "$light_blue" "installDocker    install Docker containers"
+  printf "$light_blue" "installVim       install Vim plugins and mkdirs"
+  printf "$light_blue" "installTask      install Task Warrior for CLI"
+  printf "$light_blue" "installDotfiles  pull & move dotfiles to home dir"
+  printf "$light_blue" "installChrome    install Google Chrome stable"
+  printf "$light_blue" "installFont      fetch & install the Hack font for coding"
+  printf "$light_blue" "installDropbox   fetch & install Dropbox to sync files"
+  printf "$light_blue" "installSublime   fetch,patch & install Sublime Text 3"
+  printf "$light_blue" "installNode      fetch & install NodeJS"
+}
+
+if [  "$#" -lt 1  ]
+then
+  display_usage
+  exit 0
+fi
 # ---- end helper func. -------------------
 
 # Install libraries
@@ -137,14 +167,14 @@ installDotfiles() {
 
 	git clone https://github.com/dminca/dotfiles.git $DOTFILES_PATH
   
-  cp -fv $DOTFILES_PATH/shells/.vimrc \
-     $DOTFILES_PATH/shells/.taskrc \
+  cp -fv $DOTFILES_PATH/.vimrc \
+     $DOTFILES_PATH/.taskrc \
      $DOTFILES_PATH/.bashrc \
      $DOTFILES_PATH/.tmux.conf \
      $DOTFILES_PATH/.bash_aliases \
      $DOTFILES_PATH/.gemrc $HOME/
 
-  cp -Rv $DOTFILES_PATH/snippets/* $HOME/.vim/snippets/
+  cp -Rv $REPO_PATH/snippets/* $HOME/.vim/snippets/
 
   xitsts
 }
@@ -235,9 +265,8 @@ installNode() {
 clearInstall() {
   breakline "Cleaning after installation"
 
-  rm -rfv $DOTFILES_PATH \
+  rm -rfv $REPO_PATH \
          $DOWNLOADS_DIR/tasksh-* \
-         $DOWNLOADS_DIR/$OFFARCH_NAME \
          $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
          $DOWNLOADS_DIR/$DROPBOX_VERSION
   
@@ -249,22 +278,19 @@ clearInstall() {
 
 # main command to put the system up
 init() {
-	# important installs
+  # beta
+  #installTask
+  #installDocker
+
   installPkgs
   installChrome
   installVim
-  #installTask
   installDotfiles
-  #installDocker
   installRvm
   installSublime
   installNode
-
-	# other installs
 	installFont
   installDropbox
-
-	# maintenance
   clearInstall
 
   xitsts
