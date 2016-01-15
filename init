@@ -18,6 +18,7 @@ light_blue='\e[1;94m%s\e[0m\n'
 light_red='\e[1;91m%s\e[0m\n'
 light_green='\e[1;92m%s\e[0m\n'
 light_cyan='\e[1;96m%s\e[0m\n'
+dark_gray='\e[1;100m%s\e[0m\n'
 
 # -- endcolors --
 
@@ -43,18 +44,20 @@ breakline() {
 }
 
 display_usage() {
-  printf "$light_blue" "Usage: $0 [OPTION]"
-  printf "$light_blue" "init             main initializer command"
-  printf "$light_blue" "installPkgs      install binaries"
-  printf "$light_blue" "installDocker    install Docker containers"
-  printf "$light_blue" "installVim       install Vim plugins and mkdirs"
-  printf "$light_blue" "installTask      install Task Warrior for CLI"
-  printf "$light_blue" "installDotfiles  pull & move dotfiles to home dir"
-  printf "$light_blue" "installChrome    install Google Chrome stable"
-  printf "$light_blue" "installFont      fetch & install the Hack font for coding"
-  printf "$light_blue" "installDropbox   fetch & install Dropbox to sync files"
-  printf "$light_blue" "installSublime   fetch,patch & install Sublime Text 3"
-  printf "$light_blue" "installNode      fetch & install NodeJS"
+  printf "$dark_gray" "Usage: $0 [options]
+
+  Options:
+  init             main initializer command
+  installPkgs      install binaries
+  installDocker    install Docker containers
+  installVim       install Vim plugins and mkdirs
+  installTask      install Task Warrior for CLI
+  installDotfiles  pull & move dotfiles to home dir
+  installChrome    install Google Chrome stable
+  installFont      fetch & install the Hack font for coding
+  installDropbox   fetch & install Dropbox to sync files
+  installSublime   fetch,patch & install Sublime Text 3
+  installNode      fetch & install NodeJS"
 }
 
 if [  "$#" -lt 1  ]
