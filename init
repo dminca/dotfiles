@@ -43,7 +43,8 @@ breakline() {
 }
 
 display_usage() {
-  printf "$light_blue" "Usage: [arguments]"
+  printf "$light_blue" "Usage: $0 [OPTION]"
+  printf "$light_blue" "init             main initializer command"
   printf "$light_blue" "installPkgs      install binaries"
   printf "$light_blue" "installDocker    install Docker containers"
   printf "$light_blue" "installVim       install Vim plugins and mkdirs"
