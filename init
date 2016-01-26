@@ -92,7 +92,9 @@ installPkgs() {
                           npm \
                           tree \
                           audacious \
-                          silversearcher-ag
+                          silversearcher-ag \
+                          gnupg-agent \
+                          enigmail
 
   xitsts
 }
