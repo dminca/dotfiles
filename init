@@ -22,20 +22,6 @@ dark_gray='\e[1;100m%s\e[0m\n'
 
 # -- endcolors --
 
-xitsts() {
-  "$@"
-
-  local status=$?
-
-  if [ $status -ne 0 ]; then
-    printf "$light_red" "[Error: exited with status code $1]"
-  else
-    printf "$light_green" "[No errors during installation]"
-  fi
-
-  return $status
-}
-
 breakline() {
   TXT="----| ${1} |----"
   TXT_LENGTH=$(expr length "${TXT}")
@@ -96,7 +82,6 @@ installPkgs() {
                           gnupg-agent \
                           enigmail
 
-  xitsts
 }
 
 # setup docker
@@ -113,8 +98,6 @@ installDocker() {
 	sudo chown -R $(whoami) /usr/local/bin
 	curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 	chmod +x /usr/local/bin/docker-compose
-  
-  xitsts
 }
 
 installVim() {
@@ -163,7 +146,6 @@ installTask() {
   make
 
   sudo make install
-  xitsts
 
   cd $HOME
 }
@@ -172,7 +154,7 @@ installDotfiles() {
   breakline "Copying and configuring dotfiles"
 
 	git clone https://github.com/dminca/dotfiles.git $DOTFILES_PATH
-  
+
   cp -fv $DOTFILES_PATH/.vimrc \
      $DOTFILES_PATH/.taskrc \
      $DOTFILES_PATH/.bashrc \
@@ -182,7 +164,6 @@ installDotfiles() {
 
   cp -Rv $REPO_PATH/snippets/* $HOME/.vim/snippets/
 
-  xitsts
 }
 
 installChrome() {
@@ -203,8 +184,7 @@ installChrome() {
 
 	# Cleanup
 	sudo rm -f google-chrome-stable_current_amd64.deb
-  
-  xitsts
+
 }
 
 installRvm() {
@@ -220,7 +200,6 @@ installFont() {
   wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
   unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
 
-  xitsts
 }
 
 installDropbox() {
@@ -230,7 +209,6 @@ installDropbox() {
 
   sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
 
-  xitsts
 }
 
 installVirtualbox() {
@@ -250,7 +228,6 @@ installSublime() {
 
   sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
 
-  xitsts
 }
 
 installNode() {
@@ -265,7 +242,7 @@ installNode() {
   # TODO: call the function to check whether the install was a success
   # or not. If successful show message, else show error.
 
-  xitsts
+
 }
 
 clearInstall() {
@@ -275,8 +252,7 @@ clearInstall() {
          $DOWNLOADS_DIR/tasksh-* \
          $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
          $DOWNLOADS_DIR/$DROPBOX_VERSION
-  
-  xitsts
+
 
   cd $HOME
 }
@@ -299,7 +275,6 @@ init() {
   installDropbox
   clearInstall
 
-  xitsts
 }
 
 "$@"
