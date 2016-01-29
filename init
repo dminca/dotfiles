@@ -80,7 +80,8 @@ installPkgs() {
                           audacious \
                           silversearcher-ag \
                           gnupg-agent \
-                          enigmail
+                          enigmail \
+                          secure-delete
 
 }
 
