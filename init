@@ -259,7 +259,7 @@ themePaper() {
 
   sudo apt-get update
 
-  sudo apt-get install paper-gtk-theme paper-icon-theme
+  sudo apt-get install -y paper-gtk-theme paper-icon-theme
 }
 
 themeNumix() {
@@ -269,7 +269,7 @@ themeNumix() {
 
   sudo apt-get update
 
-  sudo apt-get install numix-icon-theme numix-icon-theme-circle
+  sudo apt-get install -y numix-icon-theme numix-icon-theme-circle
 }
 
 
