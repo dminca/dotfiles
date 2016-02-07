@@ -89,7 +89,8 @@ installPkgs() {
                           gnupg-agent \
                           enigmail \
                           secure-delete \
-                          clamav
+                          clamav \
+                          lnav
 
 }
 
