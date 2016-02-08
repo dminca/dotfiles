@@ -90,7 +90,8 @@ installPkgs() {
                           enigmail \
                           secure-delete \
                           clamav \
-                          lnav
+                          lnav \
+                          tcptrack
 
 }
 
