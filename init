@@ -69,8 +69,8 @@ installPkgs() {
                           git \
 												  openvpn \
 												  openssh-server \
-												  cmake \
 												  task \
+												  cmake \
 												  curl \
 												  keepass2 \
 												  xdotool \
@@ -91,7 +91,7 @@ installPkgs() {
                           secure-delete \
                           clamav \
                           lnav \
-                          tcptrack
+                          dtrx
 
 }
 
