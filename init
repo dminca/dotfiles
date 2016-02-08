@@ -69,8 +69,8 @@ installPkgs() {
                           git \
 												  openvpn \
 												  openssh-server \
-												  task \
 												  cmake \
+												  task \
 												  curl \
 												  keepass2 \
 												  xdotool \
