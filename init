@@ -60,7 +60,8 @@ fi
 
 # Install libraries
 installPkgs() {
-  sudo add-apt-repository -y ppa:git-core/ppa
+  sudo add-apt-repository -y ppa:git-core/ppa \
+                             ppa:gezakovacs/ppa
 
 	sudo apt-get update
 
@@ -76,8 +77,8 @@ installPkgs() {
 												  xdotool \
 												  xclip \
 												  python-gpgme \
+                          unetbootin \
 												  gnome-disk-utility \
-												  #usb-creator-kde \
                           unrar \
                           postgresql \
                           postgresql-contrib \
