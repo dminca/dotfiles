@@ -18,6 +18,9 @@ export ZSH=/home/$USER/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="danthe"
 
+# disable auto-renaming tmux tabs
+DISABLE_AUTO_TITLE=true
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
