@@ -44,6 +44,7 @@ display_usage() {
   installDropbox   fetch & install Dropbox to sync files
   installSublime   fetch,patch & install Sublime Text 3
   installNode      fetch & install NodeJS
+  installZsh       install zshell (oh-my-zsh)
 
   Optional:
   themeNumix       Material Design icon theme for Unix
@@ -69,15 +70,14 @@ installPkgs() {
                           git \
 												  openvpn \
 												  openssh-server \
-												  cmake \
 												  task \
+												  cmake \
 												  curl \
 												  keepass2 \
 												  xdotool \
 												  xclip \
 												  python-gpgme \
 												  gnome-disk-utility \
-												  #usb-creator-kde \
                           unrar \
                           postgresql \
                           postgresql-contrib \
@@ -91,7 +91,8 @@ installPkgs() {
                           secure-delete \
                           clamav \
                           lnav \
-                          tcptrack
+                          dtrx \
+                          zsh
 
 }
 
@@ -254,6 +255,12 @@ installNode() {
   # or not. If successful show message, else show error.
 
 
+}
+
+installZsh() {
+  curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
+
+  sh $HOME/Downloads/install.sh
 }
 
 # extra packages for design

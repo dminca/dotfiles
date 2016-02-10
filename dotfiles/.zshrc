@@ -18,6 +18,9 @@ export ZSH=/home/$USER/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="danthe"
 
+# disable auto-renaming tmux tabs
+DISABLE_AUTO_TITLE=true
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -60,7 +63,7 @@ plugins=(dangit)
 
 # User configuration
 
-export PATH="/home/$USER/.rvm/gems/ruby-2.2.1/bin:/home/$USER/.rvm/gems/ruby-2.2.1@global/bin:/home/$USER/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/$USER/.rvm/bin:/home/$USER/.rvm/bin:/home/$USER/.rvm/bin:/home/$USER/.rvm/bin"
+export PATH="/home/$USER/.rvm/gems/ruby-2.2.1/bin:/home/$USER/.rvm/gems/ruby-2.2.1@global/bin:/home/$USER/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/$USER/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -69,11 +72,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -108,7 +111,7 @@ alias l='ls -CF'
 alias lsl='ls -lsa'
 
 #========= PERSONALISED ALIASES ======================================================
-alias wtf='alias | egrep' 
+alias wtf='alias | egrep'
 
 # loop through available aliases
 alias count='find . -type f | wc -l'
@@ -120,6 +123,3 @@ alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
 [[ -z "$TMUX" ]] && exec tmux
-
-# Include RVM in zsh path
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
