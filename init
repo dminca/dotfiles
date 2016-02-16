@@ -2,12 +2,11 @@
 # Script that sets up the developer environment
 # Copyright (C) 2015 Minca Daniel Andrei - All Rights Reserved
 # Permission to copy and modify is granted under the GPL V2 license
-# Last revised 14/11/2015
 
 VIM_PATH="$HOME/.vim/"
-REPO_PATH="$HOME/dotfiles"
-DOTFILES_PATH="$REPO_PATH/dotfiles/"
 DOWNLOADS_DIR="$HOME/Downloads"
+REPO_PATH="$DOWNLOADS_DIR/dotfiles"
+DOTFILES_PATH="$REPO_PATH/dotfiles"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 
 # --------- Helper Functions ------------
@@ -165,7 +164,7 @@ installTask() {
 installDotfiles() {
   breakline "Copying and configuring dotfiles"
 
-	git clone https://github.com/dminca/dotfiles.git $DOTFILES_PATH
+	git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
 
   cp -fv $DOTFILES_PATH/.vimrc \
      $DOTFILES_PATH/.taskrc \
