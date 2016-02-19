@@ -1,0 +1,23 @@
+#!/bin/bash
+# Useful formatting functions for bash scripts
+# Copyright (C) 2015 Minca Daniel Andrei - All Rights Reserved
+# Permission to copy and modify is granted under the GPL V2 license
+
+# --------- Helper Functions ------------
+# ---- COLORS ----
+# Example usage format:
+# printf "$COLOR" "text"
+light_blue='\e[1;94m%s\e[0m\n'
+light_red='\e[1;91m%s\e[0m\n'
+light_green='\e[1;92m%s\e[0m\n'
+light_cyan='\e[1;96m%s\e[0m\n'
+dark_gray='\e[1;100m%s\e[0m\n'
+
+# -- endcolors --
+
+breakline() {
+  TXT="----| ${1} |----"
+  TXT_LENGTH=$(expr length "${TXT}")
+  NL=$'\n'
+  printf "$light_cyan" "${NL}${TXT}${NL}"
+}
