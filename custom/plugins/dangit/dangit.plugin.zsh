@@ -1,10 +1,10 @@
 #  ██████╗  █████╗ ███╗   ██╗ ██████╗ ██╗████████╗
 #  ██╔══██╗██╔══██╗████╗  ██║██╔════╝ ██║╚══██╔══╝
-#  ██║  ██║███████║██╔██╗ ██║██║  ███╗██║   ██║   
-#  ██║  ██║██╔══██║██║╚██╗██║██║   ██║██║   ██║   
-#  ██████╔╝██║  ██║██║ ╚████║╚██████╔╝██║   ██║   
-#  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝   ╚═╝   
-#                                                 
+#  ██║  ██║███████║██╔██╗ ██║██║  ███╗██║   ██║
+#  ██║  ██║██╔══██║██║╚██╗██║██║   ██║██║   ██║
+#  ██████╔╝██║  ██║██║ ╚████║╚██████╔╝██║   ██║
+#  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝   ╚═╝
+#
 # Query/use custom command for `git`.
 zstyle -s ":vcs_info:git:*:-all-" "command" _omz_git_git_cmd
 : ${_omz_git_git_cmd:=git}
@@ -76,19 +76,18 @@ alias gcl='git clone --recursive'
 # Too fuckin destructive!
 #alias gclean='git reset --hard && git clean -dfx'
 alias gcm='git checkout master'
-alias gcs='git checkout staging' 
 alias gcmsg='git commit -m'
 alias gco='git checkout'
 alias gcount='git shortlog -sn'
 compdef gcount=git
 alias gcp='git cherry-pick'
-alias gcs='git commit -S'
+alias gcs='git commit -v -S -s'
 
 alias giff='git diff'
 alias gdca='git diff --cached'
 alias gdt='git diff-tree --no-commit-id --name-only -r'
 
-alias gf='git fetch'
+alias gf='git fetch origin'
 alias gfa='git fetch --all --prune'
 
 alias gignore='git update-index --assume-unchanged'
@@ -159,4 +158,3 @@ alias gupv='git pull --rebase -v'
 alias gvt='git verify-tag'
 
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
-
