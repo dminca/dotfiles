@@ -130,9 +130,26 @@ Restoring your key pair is easy as pie
 
 `gpg --import private.key`
 
+## Keyservers
+* [keyserver.ubuntu.com][1]
+* [sks-keyservers.net][2]
+* [pgp.mit.edu][3]
+* [zimmermann.mayfirst.org][4]
+* [pool.sks-keyservers.net][5]
+* [subkeys.pgp.net][6]
+* [pgp.mit.edu on 443][7]
+* [keyserver.pgp.com][8]
 
 Source
 ------
 
 Most of the inpiration for putting this guide together was drawn from the [Ubuntu GnuPrivacyGuardHowto](https://help.ubuntu.com/community/GnuPrivacyGuardHowto)
 
+[1]: http://keyserver.ubuntu.com/
+[2]: https://sks-keyservers.net
+[3]: http://pgp.mit.edu/
+[4]: http://zimmermann.mayfirst.org/
+[5]: http://pool.sks-keyservers.net:11371/
+[6]: http://subkeys.pgp.net:11371/
+[7]: https://pgp.mit.edu/
+[8]: https://keyserver.pgp.com/vkd/GetWelcomeScreen.event
