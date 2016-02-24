@@ -370,6 +370,11 @@
       </action>
     </keybind>
     <!-- Keybindings for running Run menu from Lxpanel on Home + R-->
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>lxsession-default launcher</command>
+      </action>
+    </keybind>
     <keybind key="A-F2">
       <action name="Execute">
         <command>lxsession-default launcher</command>
@@ -510,6 +515,9 @@
         <command>firefox</command>
       </action>
     </keybind>
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>retext</command>
     <keybind key="W-r">
       <action name="Execute">
         <command>retext</command>
