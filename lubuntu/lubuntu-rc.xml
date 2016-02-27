@@ -512,7 +512,12 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>google-chrome-stable</command>
+        <command>firefox</command>
+      </action>
+    </keybind>
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>retext</command>
       </action>
     </keybind>
   </keyboard>
