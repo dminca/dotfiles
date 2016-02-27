@@ -15,6 +15,7 @@ Day-to-day operations done on a linux OS.
 * [AWK functions - call & definition][6]
 * [Install Java 7 on Debian via apt-get][7]
 * [Install aptitude on Debian/Ubuntu][8]
+* [Git submodules][9]
 
 [1]: https://github.com/dminca/dotfiles/tree/master/MiniDocs/archiving/tar-folder-and-subfolders.md
 [2]: https://github.com/dminca/dotfiles/tree/master/MiniDocs/archiving/extract-everything.md
@@ -24,3 +25,4 @@ Day-to-day operations done on a linux OS.
 [6]: https://github.com/dminca/dotfiles/tree/master/MiniDocs/awk/calling-and-defining-awk-functions.md
 [7]: https://github.com/dminca/dotfiles/tree/master/MiniDocs/debian/install-java7-debian.md
 [8]: https://github.com/dminca/dotfiles/tree/master/MiniDocs/debian/install-aptitude-debian-ubuntu.md
+[9]: https://github.com/dminca/dotfiles/tree/master/MiniDocs/git/submodules.md
