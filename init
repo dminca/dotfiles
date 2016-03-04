@@ -2,6 +2,7 @@
 # Script that sets up the developer environment
 # Copyright (C) 2015 Minca Daniel Andrei - All Rights Reserved
 # Permission to copy and modify is granted under the GPL V2 license
+set -o pipefail
 
 VIM_PATH="$HOME/.vim/"
 DOWNLOADS_DIR="$HOME/Downloads"
