@@ -63,7 +63,7 @@ plugins=(dangit)
 
 # User configuration
 
-export PATH="/home/$USER/.rvm/gems/ruby-2.2.1/bin:/home/$USER/.rvm/gems/ruby-2.2.1@global/bin:/home/$USER/.rvm/rubies/ruby-2.2.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/$USER/.rvm/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
