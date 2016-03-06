@@ -34,6 +34,7 @@ DISABLE_AUTO_TITLE=true
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -117,6 +118,7 @@ fi
 
 # Set default editor
 export EDITOR='vim'
+export IGNOREEOF=1
 
 # Run TMUX by default instead of Terminal
 # If not running interactively, do not do anything
