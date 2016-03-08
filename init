@@ -73,6 +73,11 @@ installPkgs() {
   sudo pip install --upgrade virtualenv
 }
 
+installAnsible() {
+  sudo apt-add-repository -y ppa:ansible/ansible
+  sudo apt-get update && sudo apt-get install -y ansible
+}
+
 # setup docker
 installDocker() {
 
@@ -279,6 +284,7 @@ selectiveInstall() {
     "What packages do you wish to install?" 20 78 15 \
     "bins" "Install binaries" on \
     "docker" "Install Docker tools" off \
+    "ansible" "Install Ansible for DevOps" off \
     "vim" "Pull vim plugins and .vimrc" off \
     "tasker" "Install tasksh by TaskWarrior" off \
     "dotfiles" "Pull the dotfiles and set them up" off \
@@ -299,6 +305,9 @@ selectiveInstall() {
         ;;
       docker)
         installDocker
+        ;;
+      ansible)
+        installAnsible
         ;;
       vim)
         installVim
