@@ -29,78 +29,6 @@ breakline() {
   printf "$light_cyan" "${NL}${TXT}${NL}"
 }
 
-selectiveInstall() {
-  whiptail --title "Package chooser" --checklist --separate-output \
-    "What packages do you wish to install?" 20 78 15 \
-    "bins" "Install binaries" on \
-    "docker" "Install Docker tools" off \
-    "vim" "Pull vim plugins and .vimrc" off \
-    "tasker" "Install tasksh by TaskWarrior" off \
-    "dotfiles" "Pull the dotfiles and set them up" off \
-    "chrome" "Just install the Chrome browser" off \
-    "font" "Install the Hack font for terminal" off \
-    "dropbox" "Install Dropbox file sync" off \
-    "sublime" "Install Sublime Text 3 Full" off \
-    "nodeJS" "Fetch & install NodeJS" off \
-    "zsh" "Another Bash for your terminal" off \
-    "numix" "Material Design icon theme for Unix" off \
-    "paper" "Paper Material Design theme for Unix" off 2>results
-
-  while read choice
-  do
-    case $choice in
-      bins)
-        installPkgs
-        ;;
-      docker)
-        installDocker
-        ;;
-      vim)
-        installVim
-        ;;
-      tasker)
-        installTask
-        ;;
-      dotfiles)
-        installDotfiles
-        ;;
-      chrome)
-        installChrome
-        ;;
-      font)
-        installFont
-        ;;
-      dropbox)
-        installDropbox
-        ;;
-      sublime)
-        installSublime
-        ;;
-      nodeJS)
-        installNode
-        ;;
-      zsh)
-        installZsh
-        ;;
-      numix)
-        themeNumix
-        ;;
-      paper)
-        themePaper
-        ;;
-      *)
-        echo "Nothing selected, exiting.."
-        ;;
-    esac
-  done < results
-
-}
-
-if [  "$#" -lt 1  ]
-then
-  selectiveInstall
-  exit 0
-fi
 # ---- end helper func. -------------------
 
 # Install libraries
@@ -345,5 +273,78 @@ clearInstall() {
 
   cd $HOME
 }
+
+selectiveInstall() {
+  whiptail --title "Package chooser" --checklist --separate-output \
+    "What packages do you wish to install?" 20 78 15 \
+    "bins" "Install binaries" on \
+    "docker" "Install Docker tools" off \
+    "vim" "Pull vim plugins and .vimrc" off \
+    "tasker" "Install tasksh by TaskWarrior" off \
+    "dotfiles" "Pull the dotfiles and set them up" off \
+    "chrome" "Just install the Chrome browser" off \
+    "font" "Install the Hack font for terminal" off \
+    "dropbox" "Install Dropbox file sync" off \
+    "sublime" "Install Sublime Text 3 Full" off \
+    "nodeJS" "Fetch & install NodeJS" off \
+    "zsh" "Another Bash for your terminal" off \
+    "numix" "Material Design icon theme for Unix" off \
+    "paper" "Paper Material Design theme for Unix" off 2>results
+
+  while read choice
+  do
+    case $choice in
+      bins)
+        installPkgs
+        ;;
+      docker)
+        installDocker
+        ;;
+      vim)
+        installVim
+        ;;
+      tasker)
+        installTask
+        ;;
+      dotfiles)
+        installDotfiles
+        ;;
+      chrome)
+        installChrome
+        ;;
+      font)
+        installFont
+        ;;
+      dropbox)
+        installDropbox
+        ;;
+      sublime)
+        installSublime
+        ;;
+      nodeJS)
+        installNode
+        ;;
+      zsh)
+        installZsh
+        ;;
+      numix)
+        themeNumix
+        ;;
+      paper)
+        themePaper
+        ;;
+      *)
+        echo "Nothing selected, exiting.."
+        ;;
+    esac
+  done < results
+
+}
+
+if [  "$#" -lt 1  ]
+then
+  selectiveInstall
+  exit 0
+fi
 
 "$@"
