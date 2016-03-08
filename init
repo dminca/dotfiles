@@ -29,36 +29,6 @@ breakline() {
   printf "$light_cyan" "${NL}${TXT}${NL}"
 }
 
-display_usage() {
-  printf "$dark_gray" "Usage: $0 [options]
-
-  Options:
-  init             main initializer command
-  installPkgs      install binaries
-  installDocker    install Docker containers
-  installVim       install Vim plugins and mkdirs
-  installTask      install Task Warrior for CLI
-  installDotfiles  pull & move dotfiles to home dir
-  installChrome    install Google Chrome stable
-  installFont      fetch & install the Hack font for coding
-  installDropbox   fetch & install Dropbox to sync files
-  installSublime   fetch,patch & install Sublime Text 3
-  installNode      fetch & install NodeJS
-  installZsh       install zshell (oh-my-zsh)
-
-  Optional:
-  themeNumix       Material Design icon theme for Unix
-  themePaper       Paper Material design theme for Unix"
-
-}
-
-if [  "$#" -lt 1  ]
-then
-  display_usage
-  exit 0
-fi
-# ---- end helper func. -------------------
-
 selectiveInstall() {
   whiptail --title "Package chooser" --checklist --separate-output \
     "What packages do you wish to install?" 20 78 15 \
@@ -125,6 +95,13 @@ selectiveInstall() {
   done < results
 
 }
+
+if [  "$#" -lt 1  ]
+then
+  selectiveInstall
+  exit 0
+fi
+# ---- end helper func. -------------------
 
 # Install libraries
 installPkgs() {
@@ -367,26 +344,6 @@ clearInstall() {
 
 
   cd $HOME
-}
-
-
-# main command to put the system up
-init() {
-  # beta
-  #installTask
-  #installDocker
-
-  installPkgs
-  installChrome
-  installVim
-  installDotfiles
-  installRvm
-  installSublime
-  installNode
-	installFont
-  installDropbox
-  clearInstall
-
 }
 
 "$@"
