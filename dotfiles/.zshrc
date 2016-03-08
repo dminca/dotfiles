@@ -115,6 +115,8 @@ alias lsl='ls -lsa'
 
 #========= PERSONALISED ALIASES ======================================================
 alias wtf='alias | egrep'
+SCRIPTS_PATH=$HOME/mwd/env/scripts
+alias we="${SCRIPTS_PATH}/we"
 
 # loop through available aliases
 alias count='find . -type f | wc -l'
