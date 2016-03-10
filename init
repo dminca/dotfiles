@@ -9,6 +9,7 @@ DOWNLOADS_DIR="$HOME/Downloads"
 REPO_PATH="$DOWNLOADS_DIR/dotfiles"
 DOTFILES_PATH="$REPO_PATH/dotfiles"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
+ADOBE_PACKAGE="AdbeRdr9.5.5-1_i386linux_enu.deb"
 
 # --------- Helper Functions ------------
 # ---- COLORS ----
@@ -30,6 +31,28 @@ breakline() {
 }
 
 # ---- end helper func. -------------------
+
+installAdobe() {
+  # if the file wasn't downloaded
+  if [ ! -e "$DOWNLOADS_DIR/$ADOBE_PACKAGE" ]; then
+    # grab the .deb
+    wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/$ADOBE_PACKAGE -P $DOWNLOADS_DIR
+
+    # add the missing 32-bit libs
+    sudo apt-get -fy install
+    sudo apt-get install -y libxml2:i386 lib32stdc++6
+
+    # install pkg and force to accept
+    # 32-bit version and any errors
+    sudo dpkg -i --force-architecture $DOWNLOADS_DIR/$ADOBE_PACKAGE
+
+    # so it doesn't print the next statement
+    exit 0
+  fi
+
+  printf "$light_red" "[ERROR] File was already downloaded, please check $DOWNLOADS_DIR"
+  exit 1
+}
 
 # Install libraries
 installPkgs() {
@@ -291,6 +314,7 @@ selectiveInstall() {
     "chrome" "Just install the Chrome browser" off \
     "font" "Install the Hack font for terminal" off \
     "dropbox" "Install Dropbox file sync" off \
+    "adobeReader" "Install Adobe Reader" off \
     "sublime" "Install Sublime Text 3 Full" off \
     "nodeJS" "Fetch & install NodeJS" off \
     "zsh" "Another Bash for your terminal" off \
@@ -326,6 +350,9 @@ selectiveInstall() {
         ;;
       dropbox)
         installDropbox
+        ;;
+      adobeReader)
+        installAdobe
         ;;
       sublime)
         installSublime
