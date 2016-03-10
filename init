@@ -305,7 +305,7 @@ clearInstall() {
 selectiveInstall() {
   whiptail --title "Package chooser" --checklist --separate-output \
     "What packages do you wish to install?" 20 78 15 \
-    "bins" "Install binaries" on \
+    "bins" "Install binaries" off \
     "docker" "Install Docker tools" off \
     "ansible" "Install Ansible for DevOps" off \
     "vim" "Pull vim plugins and .vimrc" off \
