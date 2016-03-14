@@ -68,7 +68,7 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 " Enable syntax highlighting
 syntax enable
 
-colorscheme murphy
+colorscheme evening
 set background=dark
 
 " Display vim colors properly on ubuntu
