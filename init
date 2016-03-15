@@ -11,7 +11,9 @@ DOTFILES_PATH="$REPO_PATH/dotfiles"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 ADOBE_PACKAGE="AdbeRdr9.5.5-1_i386linux_enu.deb"
 
-# --------- Helper Functions ------------
+#----------------------------------------------------------------------
+#  HELPER FUNCTIONS
+#----------------------------------------------------------------------
 # ---- COLORS ----
 # Example usage format:
 # printf "$COLOR" "text"
@@ -31,6 +33,18 @@ breakline() {
 }
 
 # ---- end helper func. -------------------
+#-------------------------------------------------------------------------
+#  Cleanup memory by removing all unused Linux Kernel headers, images and
+#  modules
+#-------------------------------------------------------------------------
+cleanup_memory ()
+{
+  dpkg -l 'linux-*' |\
+  sed '/^ii/!d;/'"$(uname -r |\
+  sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
+  xargs sudo apt-get -y purge
+}
+
 
 installAdobe() {
   # if the file wasn't downloaded
@@ -319,6 +333,7 @@ selectiveInstall() {
     "nodeJS" "Fetch & install NodeJS" off \
     "zsh" "Another Bash for your terminal" off \
     "numix" "Material Design icon theme for Unix" off \
+    "cleanupMem" "Issue a cleanup memory operation" off \
     "paper" "Paper Material Design theme for Unix" off 2>results
 
   while read choice
@@ -365,6 +380,9 @@ selectiveInstall() {
         ;;
       numix)
         themeNumix
+        ;;
+      cleanupMem)
+        cleanup_memory
         ;;
       paper)
         themePaper
