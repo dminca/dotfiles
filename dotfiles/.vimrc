@@ -65,10 +65,7 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable
-
-colorscheme murphy
+colorscheme evening
 set background=dark
 
 " Display vim colors properly on ubuntu
@@ -118,3 +115,18 @@ function! HasPaste()
   return ''
 endfunction
 
+function! CommitMessages()
+    let g:git_ci_msg_user = substitute(system("git config --get user.name"), '\n$', '', '')
+    let g:git_ci_msg_email = substitute(system("git config --get user.email"), '\n$', '', '')
+
+    nmap S oSigned-off-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><CR><ESC>
+    nmap R oReviewed-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR><ESC>
+    iab #S Signed-off-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR>
+    iab #R Reviewed-by: <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR>
+    iab #O Signed-off-by:
+    iab #V Reviewed-by:
+    iab #P Pair-Programmed-With:
+    iab ME <C-R>=printf("%s <%s>", g:git_ci_msg_user, g:git_ci_msg_email)<CR>
+    iab ASN Andreas<SPACE>Schnitzel<SPACE><asn@google.org>
+endf
+autocmd BufWinEnter COMMIT_EDITMSG,*.diff,*.patch,*.patches.txt call CommitMessages()
