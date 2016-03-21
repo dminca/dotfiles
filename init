@@ -170,6 +170,12 @@ installTask() {
 
   cd tasksh-*
 
+  cmake --version 2>&1 > /dev/null
+  if [ "$?" -ne 0 ]; then
+    printf "$light_red" "Could not find cmake."
+    return 1
+  fi
+
   cmake -DCMAKE_BUILD_TYPE=release .
 
   sleep 2
