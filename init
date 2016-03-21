@@ -38,7 +38,7 @@ installWireshark ()
 {
   breakline "Installing Wireshark"
 
-  sudo apt-get install wireshark
+  sudo apt-get install -y wireshark
   sudo groupadd wireshark
   sudo usermod -a -G wireshark $USER
   sudo chgrp wireshark /usr/bin/dumpcap
