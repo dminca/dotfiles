@@ -33,6 +33,20 @@ breakline() {
 }
 
 # ---- end helper func. -------------------
+
+installWireshark ()
+{
+  breakline "Installing Wireshark"
+
+  sudo apt-get install -y wireshark
+  sudo groupadd wireshark
+  sudo usermod -a -G wireshark $USER
+  sudo chgrp wireshark /usr/bin/dumpcap
+  sudo chmod 750 /usr/bin/dumpcap
+  sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+  sudo getcap /usr/bin/dumpcap
+}
+
 #-------------------------------------------------------------------------
 #  Cleanup memory by removing all unused Linux Kernel headers, images and
 #  modules
@@ -336,6 +350,7 @@ selectiveInstall() {
     "dropbox" "Install Dropbox file sync" off \
     "adobeReader" "Install Adobe Reader" off \
     "sublime" "Install Sublime Text 3 Full" off \
+    "installWireshark" "Install Wireshark packet analyser" off \
     "nodeJS" "Fetch & install NodeJS" off \
     "zsh" "Another Bash for your terminal" off \
     "numix" "Material Design icon theme for Unix" off \
@@ -377,6 +392,9 @@ selectiveInstall() {
         ;;
       sublime)
         installSublime
+        ;;
+      installWireshark)
+        installWireshark
         ;;
       nodeJS)
         installNode
