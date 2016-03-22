@@ -38,13 +38,18 @@ installWireshark ()
 {
   breakline "Installing Wireshark"
 
-  sudo apt-get install -y wireshark
-  sudo groupadd wireshark
-  sudo usermod -a -G wireshark $USER
-  sudo chgrp wireshark /usr/bin/dumpcap
-  sudo chmod 750 /usr/bin/dumpcap
-  sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
-  sudo getcap /usr/bin/dumpcap
+  if [ ! $(apt-cache policy wireshark | grep "\(none\)") ]; then
+    printf "$light_green" "Wireshark already installed...exiting"
+    return 1
+  else
+    sudo apt-get install -y wireshark
+    sudo groupadd wireshark
+    sudo usermod -a -G wireshark $USER
+    sudo chgrp wireshark /usr/bin/dumpcap
+    sudo chmod 750 /usr/bin/dumpcap
+    sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+    sudo getcap /usr/bin/dumpcap
+  fi
 }
 
 #-------------------------------------------------------------------------
