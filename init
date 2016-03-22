@@ -137,8 +137,9 @@ installPkgs() {
 
 installAnsible() {
   breakline "Installing Ansible"
+
   which ansible > /dev/null 2>&1
-  if [[ $? -ne 0 ]]; then
+  if [[ $? -eq 0 ]]; then
     printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
     exit 1
   fi
@@ -151,7 +152,13 @@ installDocker() {
 
   breakline "Installing Docker"
     
-  # Install  docker
+  set -xv
+  which docker > /dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Docker already installed. Exiting..."
+    exit 1
+  fi
+  Install  docker
   curl -sSL https://get.docker.com/ | sh
   sudo usermod -aG docker $USER
 
