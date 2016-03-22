@@ -83,10 +83,6 @@ installAdobe() {
 }
 
 # Install libraries
-boom () {
-  return 1
-}
-
 installPkgs() {
   sudo add-apt-repository -y ppa:git-core/ppa
 
