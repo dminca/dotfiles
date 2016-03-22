@@ -38,20 +38,20 @@ installWireshark ()
 {
   breakline "Installing Wireshark"
 
-  if [[ $(apt-cache policy wireshark | grep "\(none\)" )  -eq 0 ]]; then
-    printf "$light_red" "Wireshark already installed...exiting"
-    return 1
-  else
-    printf "$light_green" "Installing"
+  which wireshark > /dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    printf "$light_red" "[FAIL] Wireshark already installed. Exiting..."
+    exit 1
   fi
+  printf "$light_green" "[OK] Installing..."
+  sudo apt-get install -y wireshark
+  sudo groupadd wireshark
+  sudo usermod -a -G wireshark $USER
+  sudo chgrp wireshark /usr/bin/dumpcap
+  sudo chmod 750 /usr/bin/dumpcap
+  sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+  sudo getcap /usr/bin/dumpcap
 }
-    # sudo apt-get install -y wireshark
-    # sudo groupadd wireshark
-    # sudo usermod -a -G wireshark $USER
-    # sudo chgrp wireshark /usr/bin/dumpcap
-    # sudo chmod 750 /usr/bin/dumpcap
-    # sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
-    # sudo getcap /usr/bin/dumpcap
 
 #-------------------------------------------------------------------------
 #  Cleanup memory by removing all unused Linux Kernel headers, images and
@@ -59,17 +59,16 @@ installWireshark ()
 #-------------------------------------------------------------------------
 cleanup_memory ()
 {
-  if [[ $(dpkg -l 'linux-*' > $? ) -ne 0 ]]; then
+  dpkg -l 'linux-*' > /dev/null 2>&1
+  if [[ $? -ne 0 ]]; then
     printf "$light_red" "No linux headers...exiting"
-    return 1
-  else
-    printf "$light_green" "installing"
+    exit 1
   fi
+  dpkg -l 'linux-*' |\
+  sed '/^ii/!d;/'"$(uname -r |\
+  sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
+  xargs sudo apt-get -y purge
 }
-    # dpkg -l 'linux-*' |\
-    # sed '/^ii/!d;/'"$(uname -r |\
-    # sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
-    # xargs sudo apt-get -y purge
 
 
 installAdobe() {
