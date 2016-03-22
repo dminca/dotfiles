@@ -40,7 +40,7 @@ installWireshark ()
 
   which wireshark > /dev/null 2>&1
   if [[ $? -eq 0 ]]; then
-    printf "$light_red" "[FAIL] Wireshark already installed. Exiting..."
+    printf "$light_red" "[ERROR] Wireshark already installed. Exiting..."
     exit 1
   fi
   printf "$light_green" "[OK] Installing..."
@@ -95,7 +95,7 @@ installAdobe() {
 
 # Install libraries
 installPkgs() {
-  sudo add-apt-repository -y ppa:git-core/ppa
+  sudo add-apt-repository ppa:git-core/ppa --yes
 
   sudo apt-get update
 
@@ -136,7 +136,13 @@ installPkgs() {
 }
 
 installAnsible() {
-  sudo apt-add-repository -y ppa:ansible/ansible
+  breakline "Installing Ansible"
+  which ansible > /dev/null 2>&1
+  if [[ $? -ne 0 ]]; then
+    printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
+    exit 1
+  fi
+  sudo apt-add-repository ppa:ansible/ansible --yes
   sudo apt-get update && sudo apt-get install -y ansible
 }
 
