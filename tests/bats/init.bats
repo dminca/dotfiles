@@ -26,3 +26,13 @@ SCRIPT="./init"
   run $SCRIPT installPkgs
   [ $status = 0 ]
 }
+
+@test "Check if WireShark is successfully installed" {
+  run $SCRIPT installWireshark
+  [ $status = 0 ]
+}
+
+@test "Check if the memory cleanup if done properly" {
+  run $SCRIPT cleanup_memory
+  [ $status = 0 ]
+}
