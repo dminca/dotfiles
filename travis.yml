@@ -3,4 +3,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq bats
 scripts:
-  - bats test/bats
+  - bats tests/bats
