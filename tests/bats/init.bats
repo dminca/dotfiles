@@ -36,3 +36,10 @@ SCRIPT="./init"
   run $SCRIPT cleanup_memory
   [ $status = 0 ]
 }
+
+@test "Check if Adobe is installed" {
+  run $SCRIPT installAdobe
+  [ $status = 0 ]
+}
+
+
