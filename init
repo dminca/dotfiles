@@ -4,7 +4,7 @@
 # Permission to copy and modify is granted under the GPL V2 license
 set -euo pipefail
 
-VIM_PATH="$HOME/.vim/"
+VIM_PATH="$HOME/.vim"
 DOWNLOADS_DIR="$HOME/Downloads"
 REPO_PATH="$DOWNLOADS_DIR/dotfiles"
 DOTFILES_PATH="$REPO_PATH/dotfiles"
@@ -170,8 +170,12 @@ installDocker() {
 }
 
 installVim() {
-  breakline "Creating vim paths"
+  breakline "Configuring vim & pulling plugins"
 
+  if [[ -d "$VIM_PATH" ]]; then
+    printf "$light_red" "[ERROR] Vim has already been configured"
+    exit 1
+  fi
   mkdir -p $VIM_PATH/autoload \
            $VIM_PATH/bundle \
            $VIM_PATH/snippets \
@@ -195,6 +199,24 @@ installVim() {
   
   # CtrlSF
   git clone https://github.com/dyng/ctrlsf.vim.git $VIM_PATH/bundle/ctrlsf.vim
+
+  # move dotfiles in $HOME
+  cp -fv $DOTFILES_PATH/.vimrc $HOME
+  cp -Rv $REPO_PATH/snippets/* $HOME/.vim/snippets/
+}
+
+installDotfiles() {
+  breakline "Copying and configuring dotfiles"
+
+  git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
+
+  cp -fv $DOTFILES_PATH/.taskrc \
+     $DOTFILES_PATH/.bashrc \
+     $DOTFILES_PATH/.tmux.conf \
+     $DOTFILES_PATH/.bash_aliases \
+     $DOTFILES_PATH/.gemrc $HOME/
+
+
 }
 
 installTask() {
@@ -223,22 +245,6 @@ installTask() {
   sudo make install
 
   cd $HOME
-}
-
-installDotfiles() {
-  breakline "Copying and configuring dotfiles"
-
-  git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
-
-  cp -fv $DOTFILES_PATH/.vimrc \
-     $DOTFILES_PATH/.taskrc \
-     $DOTFILES_PATH/.bashrc \
-     $DOTFILES_PATH/.tmux.conf \
-     $DOTFILES_PATH/.bash_aliases \
-     $DOTFILES_PATH/.gemrc $HOME/
-
-  cp -Rv $REPO_PATH/snippets/* $HOME/.vim/snippets/
-
 }
 
 installChrome() {
