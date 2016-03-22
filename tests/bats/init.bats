@@ -1,4 +1,5 @@
 #!/usr/bin/env bats
+SCRIPT="./init"
 
 # -----------------------------------------------------------------
 # TEST BATS
@@ -21,12 +22,7 @@
 # -----------------------------------------------------------------
 # INIT SCRIPT TESTS
 # -----------------------------------------------------------------
-@test "Check if installPkgs are OK" {
-  run ./init installPkgs
-  [ $status = 0 ]
-}
-
-@test "Boom will fail" {
-  run ./init boom
+@test "Check if packages are installed via installPkgs" {
+  run $SCRIPT installPkgs
   [ $status = 0 ]
 }
