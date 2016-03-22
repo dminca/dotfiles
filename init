@@ -38,19 +38,20 @@ installWireshark ()
 {
   breakline "Installing Wireshark"
 
-  if [ ! $(apt-cache policy wireshark | grep "\(none\)") ]; then
-    printf "$light_green" "Wireshark already installed...exiting"
+  if [[ $(apt-cache policy wireshark | grep "\(none\)" )  -eq 0 ]]; then
+    printf "$light_red" "Wireshark already installed...exiting"
     return 1
   else
-    sudo apt-get install -y wireshark
-    sudo groupadd wireshark
-    sudo usermod -a -G wireshark $USER
-    sudo chgrp wireshark /usr/bin/dumpcap
-    sudo chmod 750 /usr/bin/dumpcap
-    sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
-    sudo getcap /usr/bin/dumpcap
+    printf "$light_green" "Installing"
   fi
 }
+    # sudo apt-get install -y wireshark
+    # sudo groupadd wireshark
+    # sudo usermod -a -G wireshark $USER
+    # sudo chgrp wireshark /usr/bin/dumpcap
+    # sudo chmod 750 /usr/bin/dumpcap
+    # sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+    # sudo getcap /usr/bin/dumpcap
 
 #-------------------------------------------------------------------------
 #  Cleanup memory by removing all unused Linux Kernel headers, images and
@@ -58,11 +59,17 @@ installWireshark ()
 #-------------------------------------------------------------------------
 cleanup_memory ()
 {
-  dpkg -l 'linux-*' |\
-  sed '/^ii/!d;/'"$(uname -r |\
-  sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
-  xargs sudo apt-get -y purge
+  if [[ $(dpkg -l 'linux-*' > $? ) -ne 0 ]]; then
+    printf "$light_red" "No linux headers...exiting"
+    return 1
+  else
+    printf "$light_green" "installing"
+  fi
 }
+    # dpkg -l 'linux-*' |\
+    # sed '/^ii/!d;/'"$(uname -r |\
+    # sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
+    # xargs sudo apt-get -y purge
 
 
 installAdobe() {
@@ -91,21 +98,21 @@ installAdobe() {
 installPkgs() {
   sudo add-apt-repository -y ppa:git-core/ppa
 
-	sudo apt-get update
+  sudo apt-get update
 
-	sudo apt-get install -y vim \
-												  tmux \
+  sudo apt-get install -y vim \
+                          tmux \
                           git \
-												  openvpn \
-												  openssh-server \
-												  task \
-												  cmake \
-												  curl \
-												  keepass2 \
-												  xdotool \
-												  xclip \
-												  python-gpgme \
-												  gnome-disk-utility \
+                          openvpn \
+                          openssh-server \
+                          task \
+                          cmake \
+                          curl \
+                          keepass2 \
+                          xdotool \
+                          xclip \
+                          python-gpgme \
+                          gnome-disk-utility \
                           unrar \
                           postgresql \
                           postgresql-contrib \
@@ -137,45 +144,45 @@ installAnsible() {
 # setup docker
 installDocker() {
 
-	breakline "Installing Docker"
-		
-	# Install  docker
-	curl -sSL https://get.docker.com/ | sh
-	sudo usermod -aG docker $USER
+  breakline "Installing Docker"
+    
+  # Install  docker
+  curl -sSL https://get.docker.com/ | sh
+  sudo usermod -aG docker $USER
 
 
-	# Install docker-compose
-	sudo chown -R $(whoami) /usr/local/bin
-	curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-	chmod +x /usr/local/bin/docker-compose
+  # Install docker-compose
+  sudo chown -R $(whoami) /usr/local/bin
+  curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
 }
 
 installVim() {
   breakline "Creating vim paths"
 
-	mkdir -p $VIM_PATH/autoload \
-					 $VIM_PATH/bundle \
-					 $VIM_PATH/snippets \
-					 $HOME/vimBackups
-					 
+  mkdir -p $VIM_PATH/autoload \
+           $VIM_PATH/bundle \
+           $VIM_PATH/snippets \
+           $HOME/vimBackups
+           
   breakline "Pulling VIM repositories"
 
-	# Pathogen
-	curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-	
-	# NerdTree
-	git clone https://github.com/scrooloose/nerdtree.git $VIM_PATH/bundle/nerdtree.vim
-	
-	# SnipMate
-	git clone https://github.com/tomtom/tlib_vim.git $VIM_PATH/bundle/tlib_vim
-	git clone https://github.com/MarcWeber/vim-addon-mw-utils.git $VIM_PATH/bundle/vim-addon-mw-utils
-	git clone https://github.com/garbas/vim-snipmate.git $VIM_PATH/bundle/vim-snipmate
-	
-	# CtrlP
-	git clone https://github.com/kien/ctrlp.vim.git $VIM_PATH/bundle/ctrlp.vim
-	
-	# CtrlSF
-	git clone https://github.com/dyng/ctrlsf.vim.git $VIM_PATH/bundle/ctrlsf.vim
+  # Pathogen
+  curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+  
+  # NerdTree
+  git clone https://github.com/scrooloose/nerdtree.git $VIM_PATH/bundle/nerdtree.vim
+  
+  # SnipMate
+  git clone https://github.com/tomtom/tlib_vim.git $VIM_PATH/bundle/tlib_vim
+  git clone https://github.com/MarcWeber/vim-addon-mw-utils.git $VIM_PATH/bundle/vim-addon-mw-utils
+  git clone https://github.com/garbas/vim-snipmate.git $VIM_PATH/bundle/vim-snipmate
+  
+  # CtrlP
+  git clone https://github.com/kien/ctrlp.vim.git $VIM_PATH/bundle/ctrlp.vim
+  
+  # CtrlSF
+  git clone https://github.com/dyng/ctrlsf.vim.git $VIM_PATH/bundle/ctrlsf.vim
 }
 
 installTask() {
@@ -209,7 +216,7 @@ installTask() {
 installDotfiles() {
   breakline "Copying and configuring dotfiles"
 
-	git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
+  git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
 
   cp -fv $DOTFILES_PATH/.vimrc \
      $DOTFILES_PATH/.taskrc \
@@ -224,22 +231,22 @@ installDotfiles() {
 
 installChrome() {
 
-	breakline "Installing Google Chrome"
+  breakline "Installing Google Chrome"
 
-	# Install dependencies
-	sudo apt-get -y install \
-		libxss1 \
-		libappindicator1 \
-		libindicator7
+  # Install dependencies
+  sudo apt-get -y install \
+    libxss1 \
+    libappindicator1 \
+    libindicator7
 
-	# Fetch the Chrome acrhive
-	sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  # Fetch the Chrome acrhive
+  sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-	# Install Chrome
-	sudo dpkg -i google-chrome*.deb
+  # Install Chrome
+  sudo dpkg -i google-chrome*.deb
 
-	# Cleanup
-	sudo rm -f google-chrome-stable_current_amd64.deb
+  # Cleanup
+  sudo rm -f google-chrome-stable_current_amd64.deb
 
 }
 
@@ -291,6 +298,7 @@ installNode() {
 
   wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
 
+  # BUG: extract this in $DOWNLOADS_DIR
   tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz
 
   sudo cp -vr $DOWNLOADS_DIR/node-v5.1.0-linux-x64/* /usr/local/
