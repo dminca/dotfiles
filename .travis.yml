@@ -5,3 +5,4 @@ before_install:
   - sudo apt-get install -qq bats
 scripts:
   - make test
+cache: apt
