@@ -120,7 +120,6 @@ installNode ()
 {
   breakline "Installing Node (latest)"
 
-  set -xv
   wget -P $DOWNLOADS_DIR https://nodejs.org/dist/${NODE_VERSION[0]}/${NODE_VERSION[1]}.tar.gz
 
   tar xvf $DOWNLOADS_DIR/${NODE_VERSION[1]}.tar.gz -C $DOWNLOADS_DIR
@@ -345,7 +344,7 @@ selectiveInstall ()
         installAdobe
         ;;
       ansible)
-        which gedit > /dev/null 2>&1
+        which ansible > /dev/null 2>&1
         if [[ "$?" -eq 0 ]]; then
           printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
           exit 1
