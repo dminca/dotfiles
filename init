@@ -10,6 +10,10 @@ REPO_PATH="$DOWNLOADS_DIR/dotfiles"
 DOTFILES_PATH="$REPO_PATH/dotfiles"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 ADOBE_PACKAGE="AdbeRdr9.5.5-1_i386linux_enu.deb"
+declare -a NODE_VERSION=(
+                        'v5.1.0',
+                        'node-v5.1.0-linux-x64'
+                        )
 
 #----------------------------------------------------------------------
 #  HELPER FUNCTIONS
@@ -314,11 +318,11 @@ installNode() {
     printf "$light_red" "[ERROR] NodeJS already installed. Exiting..."
     exit 1
   fi
-  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
+  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/${NODE_VERSION[0]}/${NODE_VERSION[1]}.tar.gz
 
-  tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz -C $DOWNLOADS_DIR
+  tar xvf $DOWNLOADS_DIR/${NODE_VERSION[1]}.tar.gz -C $DOWNLOADS_DIR
 
-  sudo cp -vr $DOWNLOADS_DIR/node-v5.1.0-linux-x64/* /usr/local/
+  sudo cp -vr $DOWNLOADS_DIR/${NODE_VERSION[1]}/* /usr/local/
 }
 
 installZsh() {
