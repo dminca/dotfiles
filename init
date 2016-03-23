@@ -105,7 +105,6 @@ installDocker ()
 
   breakline "Installing Docker"
     
-  set -xv
   which docker > /dev/null 2>&1
   if [[ $? -eq 0 ]]; then
     printf "$light_red" "[ERROR] Docker already installed. Exiting..."
