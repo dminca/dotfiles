@@ -126,7 +126,7 @@ installDotfiles ()
 {
   breakline "Copying and configuring dotfiles"
 
-  if [ -e "$HOME/.vimrc" -a -e "$HOME/.bashrc" -a -e "$HOME/.tmux.conf" ]; then
+  if [[ -e "$HOME/.vimrc" && -e "$HOME/.bashrc" && -e "$HOME/.tmux.conf" ]]; then
     printf "$light_red" "[ERROR] Dotfiles have already been copied. Exiting..."
     exit 1
   fi
