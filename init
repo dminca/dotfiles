@@ -355,6 +355,10 @@ themePaper() {
 themeNumix() {
   breakline "Installing Numix themne and Icon pack"
 
+  apt-cache show numix-icon-theme > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Numix theme already installed. Exiting..."
+  fi
   sudo apt-add-repository -y ppa:numix/ppa
 
   sudo apt-get update
@@ -369,10 +373,8 @@ clearInstall() {
   rm -rfv $REPO_PATH \
          $DOWNLOADS_DIR/tasksh-* \
          $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
-         $DOWNLOADS_DIR/$DROPBOX_VERSION
-
-
-  cd $HOME
+         $DOWNLOADS_DIR/$DROPBOX_VERSION \
+         $DOWNLOADS_DIR/node-v5.1.0-linux-x64*
 }
 
 selectiveInstall() {
