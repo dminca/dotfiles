@@ -337,6 +337,10 @@ installZsh() {
 themePaper() {
   breakline "Installing Paper theme and Icon pack"
 
+  apt-cache show paper-gtk-theme > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Paper theme already installed. Exiting..."
+  fi
   sudo add-apt-repository -y ppa:snwh/pulp
 
   sudo apt-get update
