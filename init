@@ -322,6 +322,12 @@ installNode() {
 }
 
 installZsh() {
+  breakline "Installing Zshell (zsh)"
+
+  which zsh > /dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    printf "$light_red" "ZSH already installed. Exiting..."
+  fi
   curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
 
   sh $HOME/Downloads/install.sh
