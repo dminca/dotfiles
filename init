@@ -273,12 +273,6 @@ installChrome() {
 
 }
 
-installRvm() {
-  breakline "Installing RVM"
-
-  echo -e "\e[1m\e[33m[Deprecated] \e[0mRVM installation will be replaced with Docker container environment"
-}
-
 installFont() {
   breakline "Pulling the Hack font"
 
@@ -295,10 +289,6 @@ installDropbox() {
 
   sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
 
-}
-
-installVirtualbox() {
-  echo -e "\e[95m[Work in Progress] \e[39mVirtualBox installation should be here..."
 }
 
 installSublime() {
