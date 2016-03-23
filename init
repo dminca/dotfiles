@@ -25,6 +25,7 @@ light_blue='\e[1;94m%s\e[0m\n'
 light_red='\e[1;91m%s\e[0m\n'
 light_green='\e[1;92m%s\e[0m\n'
 light_cyan='\e[1;96m%s\e[0m\n'
+light_yellow='\e[1;93m%s\e[0m\n'
 dark_gray='\e[1;100m%s\e[0m\n'
 
 # -- endcolors --
@@ -66,7 +67,7 @@ installAnsible ()
   breakline "Installing Ansible"
 
   which ansible > /dev/null 2>&1
-  if [[ $? -eq 0 ]]; then
+  if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
     exit 1
   fi
@@ -106,7 +107,7 @@ installDocker ()
   breakline "Installing Docker"
     
   which docker > /dev/null 2>&1
-  if [[ $? -eq 0 ]]; then
+  if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] Docker already installed. Exiting..."
     exit 1
   fi
@@ -173,7 +174,7 @@ installNode ()
   breakline "Installing Node (latest)"
 
   node --version > /dev/null 2>&1
-  if [[ $? -eq 0 ]]; then
+  if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] NodeJS already installed. Exiting..."
     exit 1
   fi
@@ -277,8 +278,6 @@ installTask ()
   make
 
   sudo make install
-
-  cd $HOME
 }
 
 installVim ()
@@ -326,7 +325,7 @@ installWireshark ()
   breakline "Installing Wireshark"
 
   which wireshark > /dev/null 2>&1
-  if [[ $? -eq 0 ]]; then
+  if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] Wireshark already installed. Exiting..."
     exit 1
   fi
@@ -345,7 +344,7 @@ installZsh ()
   breakline "Installing Zshell (zsh)"
 
   which zsh > /dev/null 2>&1
-  if [[ $? -eq 0 ]]; then
+  if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] ZSH already installed. Exiting..."
     exit 1
   fi
