@@ -1,5 +1,6 @@
 #!/usr/bin/env bats
 source vars
+# source test_helper.sh
 SCRIPT="./init"
 
 
@@ -7,17 +8,11 @@ SCRIPT="./init"
 # INIT SCRIPT TESTS
 # -----------------------------------------------------------------
 @test "Check if Adobe is installed" {
-  skip run $SCRIPT installAdobe
+  run $SCRIPT installAdobe
   [ $status -eq 0 ]
 }
 
 @test "Check if Ansible is properly installed" {
-  which ansible > /dev/null 2>&1
-  if [[ "$?" -eq 0 ]]; then
-    printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
-    skip run $SCRIPT installAnsible
-    [ $status -eq 0 ]
-  fi
   run $SCRIPT installAnsible
   [ $status -eq 0 ]
 }
@@ -53,12 +48,17 @@ SCRIPT="./init"
 }
 
 @test "Check if packages are installed via installPkgs" {
-  skip run $SCRIPT installPkgs
+  run $SCRIPT installPkgs
   [ $status -eq 0 ]
 }
 
 @test "Check if Numix theme is properly installed" {
   run $SCRIPT themeNumix
+  [ $status -eq 0 ]
+}
+
+@test "Check if NodeJS is installed properly" {
+  run $SCRIPT installNode
   [ $status -eq 0 ]
 }
 
