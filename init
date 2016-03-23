@@ -309,6 +309,11 @@ installSublime() {
 installNode() {
   breakline "Installing Node (latest)"
 
+  node --version > /dev/null 2>&1
+  if [[ $? -eq 0 ]]; then
+    printf "$light_red" "NodeJS already installed. Exiting..."
+    exit 1
+  fi
   wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
 
   tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz -C $DOWNLOADS_DIR
