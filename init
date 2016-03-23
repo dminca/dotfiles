@@ -4,12 +4,16 @@
 # Permission to copy and modify is granted under the GPL V2 license
 set -euo pipefail
 
-VIM_PATH="$HOME/.vim/"
+VIM_PATH="$HOME/.vim"
 DOWNLOADS_DIR="$HOME/Downloads"
 REPO_PATH="$DOWNLOADS_DIR/dotfiles"
 DOTFILES_PATH="$REPO_PATH/dotfiles"
 DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
 ADOBE_PACKAGE="AdbeRdr9.5.5-1_i386linux_enu.deb"
+declare -a NODE_VERSION=(
+                        'v5.1.0',
+                        'node-v5.1.0-linux-x64'
+                        )
 
 #----------------------------------------------------------------------
 #  HELPER FUNCTIONS
@@ -21,11 +25,13 @@ light_blue='\e[1;94m%s\e[0m\n'
 light_red='\e[1;91m%s\e[0m\n'
 light_green='\e[1;92m%s\e[0m\n'
 light_cyan='\e[1;96m%s\e[0m\n'
+light_yellow='\e[1;93m%s\e[0m\n'
 dark_gray='\e[1;100m%s\e[0m\n'
 
 # -- endcolors --
 
-breakline() {
+breakline ()
+{
   TXT="----| ${1} |----"
   TXT_LENGTH=$(expr length "${TXT}")
   NL=$'\n'
@@ -33,36 +39,10 @@ breakline() {
 }
 
 # ---- end helper func. -------------------
-
-installWireshark ()
+installAdobe ()
 {
-  breakline "Installing Wireshark"
-
-  sudo apt-get install -y wireshark
-  sudo groupadd wireshark
-  sudo usermod -a -G wireshark $USER
-  sudo chgrp wireshark /usr/bin/dumpcap
-  sudo chmod 750 /usr/bin/dumpcap
-  sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
-  sudo getcap /usr/bin/dumpcap
-}
-
-#-------------------------------------------------------------------------
-#  Cleanup memory by removing all unused Linux Kernel headers, images and
-#  modules
-#-------------------------------------------------------------------------
-cleanup_memory ()
-{
-  dpkg -l 'linux-*' |\
-  sed '/^ii/!d;/'"$(uname -r |\
-  sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
-  xargs sudo apt-get -y purge
-}
-
-
-installAdobe() {
   # if the file wasn't downloaded
-  if [ ! -e "$DOWNLOADS_DIR/$ADOBE_PACKAGE" ]; then
+  if [[ ! -e "$DOWNLOADS_DIR/$ADOBE_PACKAGE" ]]; then
     # grab the .deb
     wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/$ADOBE_PACKAGE -P $DOWNLOADS_DIR
 
@@ -82,25 +62,149 @@ installAdobe() {
   exit 1
 }
 
+installAnsible ()
+{
+  breakline "Installing Ansible"
+
+  which ansible > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
+    exit 1
+  fi
+  sudo apt-add-repository ppa:ansible/ansible --yes
+  sudo apt-get update && sudo apt-get install -y ansible
+}
+
+installChrome ()
+{
+  breakline "Installing Google Chrome"
+
+  apt-cache show google-chrome-stable > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Chrome already installed. Exiting..."
+    exit 1
+  fi
+  # Install dependencies
+  sudo apt-get -y install \
+    libxss1 \
+    libappindicator1 \
+    libindicator7
+
+  # Fetch the Chrome acrhive
+  sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+  # Install Chrome
+  sudo dpkg -i google-chrome*.deb
+
+  # Cleanup
+  sudo rm -f google-chrome-stable_current_amd64.deb
+}
+
+# setup docker
+installDocker ()
+{
+
+  breakline "Installing Docker"
+    
+  which docker > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Docker already installed. Exiting..."
+    exit 1
+  fi
+  Install  docker
+  curl -sSL https://get.docker.com/ | sh
+  sudo usermod -aG docker $USER
+
+
+  # Install docker-compose
+  sudo chown -R $(whoami) /usr/local/bin
+  curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
+}
+
+installDotfiles ()
+{
+  breakline "Copying and configuring dotfiles"
+
+  if [ -e "$HOME/.vimrc" -a -e "$HOME/.bashrc" -a -e "$HOME/.tmux.conf" ]; then
+    printf "$light_red" "[ERROR] Dotfiles have already been copied. Exiting..."
+    exit 1
+  fi
+  git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
+
+  cp -fv $DOTFILES_PATH/.taskrc \
+     $DOTFILES_PATH/.bashrc \
+     $DOTFILES_PATH/.tmux.conf \
+     $DOTFILES_PATH/.bash_aliases \
+     $DOTFILES_PATH/.gemrc $HOME/
+}
+
+installDropbox ()
+{
+  breakline "Installing Dropbox"
+
+  apt-cache show dropbox > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Dropbox already installed. Exiting..."
+    exit 1
+  fi
+  wget -P $DOWNLOADS_DIR https://linux.dropbox.com/packages/ubuntu/$DROPBOX_VERSION
+
+  sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
+}
+
+installFont ()
+{
+  breakline "Pulling the Hack font"
+
+  if [[ -e "$HOME/.fonts/truetype/Hack-Regular.ttf" ]]; then
+    printf "$light_red" "[ERROR] Hack font already installed. Exiting..."
+    exit 1
+  fi
+  mkdir -p $HOME/.fonts/truetype
+  wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
+  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
+
+  # post-install cleanup
+  rm -rfv $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
+}
+
+installNode ()
+{
+  breakline "Installing Node (latest)"
+
+  node --version > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] NodeJS already installed. Exiting..."
+    exit 1
+  fi
+  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/${NODE_VERSION[0]}/${NODE_VERSION[1]}.tar.gz
+
+  tar xvf $DOWNLOADS_DIR/${NODE_VERSION[1]}.tar.gz -C $DOWNLOADS_DIR
+
+  sudo cp -vr $DOWNLOADS_DIR/${NODE_VERSION[1]}/* /usr/local/
+}
+
 # Install libraries
-installPkgs() {
-  sudo add-apt-repository -y ppa:git-core/ppa
+installPkgs ()
+{
+  sudo add-apt-repository ppa:git-core/ppa --yes
 
-	sudo apt-get update
+  sudo apt-get update
 
-	sudo apt-get install -y vim \
-												  tmux \
+  sudo apt-get install -y vim \
+                          tmux \
                           git \
-												  openvpn \
-												  openssh-server \
-												  task \
-												  cmake \
-												  curl \
-												  keepass2 \
-												  xdotool \
-												  xclip \
-												  python-gpgme \
-												  gnome-disk-utility \
+                          openvpn \
+                          openssh-server \
+                          task \
+                          cmake \
+                          curl \
+                          keepass2 \
+                          xdotool \
+                          xclip \
+                          python-gpgme \
+                          gnome-disk-utility \
                           unrar \
                           postgresql \
                           postgresql-contrib \
@@ -124,58 +228,35 @@ installPkgs() {
   sudo pip install --upgrade virtualenv
 }
 
-installAnsible() {
-  sudo apt-add-repository -y ppa:ansible/ansible
-  sudo apt-get update && sudo apt-get install -y ansible
+installSublime ()
+{
+  breakline "Installing Sublime Text 3 build 3065"
+
+  subl --version > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Sublime already installed. Exiting..."
+    exit 1
+  fi
+  wget -P $DOWNLOADS_DIR http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
+
+  sudo dpkg -i $DOWNLOADS_DIR/sublime-text_build-3065_amd64.deb
+
+  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text http://cl.ly/1z0S25150Y0I/sublime_text%20crack%20linux%2064%20build%203065
+
+  chmod u+x $DOWNLOADS_DIR/sublime_text
+
+  sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
 }
 
-# setup docker
-installDocker() {
-
-	breakline "Installing Docker"
-		
-	# Install  docker
-	curl -sSL https://get.docker.com/ | sh
-	sudo usermod -aG docker $USER
-
-
-	# Install docker-compose
-	sudo chown -R $(whoami) /usr/local/bin
-	curl -L https://github.com/docker/compose/releases/download/1.4.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-	chmod +x /usr/local/bin/docker-compose
-}
-
-installVim() {
-  breakline "Creating vim paths"
-
-	mkdir -p $VIM_PATH/autoload \
-					 $VIM_PATH/bundle \
-					 $VIM_PATH/snippets \
-					 $HOME/vimBackups
-					 
-  breakline "Pulling VIM repositories"
-
-	# Pathogen
-	curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-	
-	# NerdTree
-	git clone https://github.com/scrooloose/nerdtree.git $VIM_PATH/bundle/nerdtree.vim
-	
-	# SnipMate
-	git clone https://github.com/tomtom/tlib_vim.git $VIM_PATH/bundle/tlib_vim
-	git clone https://github.com/MarcWeber/vim-addon-mw-utils.git $VIM_PATH/bundle/vim-addon-mw-utils
-	git clone https://github.com/garbas/vim-snipmate.git $VIM_PATH/bundle/vim-snipmate
-	
-	# CtrlP
-	git clone https://github.com/kien/ctrlp.vim.git $VIM_PATH/bundle/ctrlp.vim
-	
-	# CtrlSF
-	git clone https://github.com/dyng/ctrlsf.vim.git $VIM_PATH/bundle/ctrlsf.vim
-}
-
-installTask() {
+installTask ()
+{
   breakline "Installing tasksh by taskwarrior"
 
+  which tasksh > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] TaskSH has already been installed. Exiting..."
+    exit 1
+  fi
   wget http://taskwarrior.org/download/tasksh-latest.tar.gz --directory-prefix=$DOWNLOADS_DIR
 
   cd $DOWNLOADS_DIR
@@ -186,8 +267,8 @@ installTask() {
 
   cmake --version 2>&1 > /dev/null
   if [ "$?" -ne 0 ]; then
-    printf "$light_red" "Could not find cmake."
-    return 1
+    printf "$light_red" "[ERROR] Could not find cmake."
+    exit 1
   fi
 
   cmake -DCMAKE_BUILD_TYPE=release .
@@ -197,115 +278,118 @@ installTask() {
   make
 
   sudo make install
-
-  cd $HOME
 }
 
-installDotfiles() {
-  breakline "Copying and configuring dotfiles"
+installVim ()
+{
+  breakline "Configuring vim & pulling plugins"
 
-	git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
+  if [[ -d "$VIM_PATH" ]]; then
+    printf "$light_red" "[ERROR] Vim has already been configured"
+    exit 1
+  fi
+  mkdir -p $VIM_PATH/autoload \
+           $VIM_PATH/bundle \
+           $VIM_PATH/snippets \
+           $HOME/vimBackups
+           
+  breakline "Pulling VIM repositories"
 
-  cp -fv $DOTFILES_PATH/.vimrc \
-     $DOTFILES_PATH/.taskrc \
-     $DOTFILES_PATH/.bashrc \
-     $DOTFILES_PATH/.tmux.conf \
-     $DOTFILES_PATH/.bash_aliases \
-     $DOTFILES_PATH/.gemrc $HOME/
+  # Pathogen
+  curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+  
+  # NerdTree
+  git clone https://github.com/scrooloose/nerdtree.git $VIM_PATH/bundle/nerdtree.vim
+  
+  # SnipMate
+  git clone https://github.com/tomtom/tlib_vim.git $VIM_PATH/bundle/tlib_vim
+  git clone https://github.com/MarcWeber/vim-addon-mw-utils.git $VIM_PATH/bundle/vim-addon-mw-utils
+  git clone https://github.com/garbas/vim-snipmate.git $VIM_PATH/bundle/vim-snipmate
+  
+  # CtrlP
+  git clone https://github.com/kien/ctrlp.vim.git $VIM_PATH/bundle/ctrlp.vim
+  
+  # CtrlSF
+  git clone https://github.com/dyng/ctrlsf.vim.git $VIM_PATH/bundle/ctrlsf.vim
 
+  # move dotfiles in $HOME
+  if [[ ! -d $REPO_PATH ]]; then
+    git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
+  fi
+  cp -fv $DOTFILES_PATH/.vimrc $HOME
   cp -Rv $REPO_PATH/snippets/* $HOME/.vim/snippets/
-
 }
 
-installChrome() {
+installWireshark ()
+{
+  breakline "Installing Wireshark"
 
-	breakline "Installing Google Chrome"
-
-	# Install dependencies
-	sudo apt-get -y install \
-		libxss1 \
-		libappindicator1 \
-		libindicator7
-
-	# Fetch the Chrome acrhive
-	sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
-	# Install Chrome
-	sudo dpkg -i google-chrome*.deb
-
-	# Cleanup
-	sudo rm -f google-chrome-stable_current_amd64.deb
-
+  which wireshark > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Wireshark already installed. Exiting..."
+    exit 1
+  fi
+  printf "$light_green" "[OK] Installing..."
+  sudo apt-get install -y wireshark
+  sudo groupadd wireshark
+  sudo usermod -a -G wireshark $USER
+  sudo chgrp wireshark /usr/bin/dumpcap
+  sudo chmod 750 /usr/bin/dumpcap
+  sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+  sudo getcap /usr/bin/dumpcap
 }
 
-installRvm() {
-  breakline "Installing RVM"
+installZsh ()
+{
+  breakline "Installing Zshell (zsh)"
 
-  echo -e "\e[1m\e[33m[Deprecated] \e[0mRVM installation will be replaced with Docker container environment"
-}
-
-installFont() {
-  breakline "Pulling the Hack font"
-
-  mkdir -p $HOME/.fonts/truetype
-  wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
-  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
-
-}
-
-installDropbox() {
-  breakline "Installing Dropbox"
-
-  wget -P $DOWNLOADS_DIR https://linux.dropbox.com/packages/ubuntu/$DROPBOX_VERSION
-
-  sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
-
-}
-
-installVirtualbox() {
-  echo -e "\e[95m[Work in Progress] \e[39mVirtualBox installation should be here..."
-}
-
-installSublime() {
-  breakline "Installing Sublime Text 3 build 3065"
-
-  wget -P $DOWNLOADS_DIR http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
-
-  sudo dpkg -i $DOWNLOADS_DIR/sublime-text_build-3065_amd64.deb
-
-  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text http://cl.ly/1z0S25150Y0I/sublime_text%20crack%20linux%2064%20build%203065
-
-  chmod u+x $DOWNLOADS_DIR/sublime_text
-
-  sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
-
-}
-
-installNode() {
-  breakline "Installing Node (latest)"
-
-  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
-
-  tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz
-
-  sudo cp -vr $DOWNLOADS_DIR/node-v5.1.0-linux-x64/* /usr/local/
-
-  # TODO: call the function to check whether the install was a success
-  # or not. If successful show message, else show error.
-
-
-}
-
-installZsh() {
+  which zsh > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] ZSH already installed. Exiting..."
+    exit 1
+  fi
   curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
 
   sh $HOME/Downloads/install.sh
 }
 
+#-------------------------------------------------------------------------
+#  Cleanup memory by removing all unused Linux Kernel headers, images and
+#  modules
+#-------------------------------------------------------------------------
+cleanup_memory ()
+{
+  dpkg -l 'linux-*' > /dev/null 2>&1
+  if [[ $? -ne 0 ]]; then
+    printf "$light_red" "No linux headers...exiting"
+    exit 1
+  fi
+  dpkg -l 'linux-*' |\
+  sed '/^ii/!d;/'"$(uname -r |\
+  sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' |\
+  xargs sudo apt-get -y purge
+}
+
+clearInstall ()
+{
+  breakline "Cleaning after installation"
+
+  rm -rfv $REPO_PATH \
+         $DOWNLOADS_DIR/tasksh-* \
+         $DOWNLOADS_DIR/$DROPBOX_VERSION \
+         $DOWNLOADS_DIR/node-v5.1.0-linux-x64*
+}
+
 # extra packages for design
-themePaper() {
+themePaper ()
+{
   breakline "Installing Paper theme and Icon pack"
 
+  apt-cache show paper-gtk-theme > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Paper theme already installed. Exiting..."
+    exit 1
+  fi
   sudo add-apt-repository -y ppa:snwh/pulp
 
   sudo apt-get update
@@ -313,9 +397,15 @@ themePaper() {
   sudo apt-get install -y paper-gtk-theme paper-icon-theme
 }
 
-themeNumix() {
+themeNumix ()
+{
   breakline "Installing Numix themne and Icon pack"
 
+  apt-cache show numix-icon-theme > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Numix theme already installed. Exiting..."
+    exit 1
+  fi
   sudo apt-add-repository -y ppa:numix/ppa
 
   sudo apt-get update
@@ -323,20 +413,8 @@ themeNumix() {
   sudo apt-get install -y numix-icon-theme numix-icon-theme-circle
 }
 
-
-clearInstall() {
-  breakline "Cleaning after installation"
-
-  rm -rfv $REPO_PATH \
-         $DOWNLOADS_DIR/tasksh-* \
-         $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
-         $DOWNLOADS_DIR/$DROPBOX_VERSION
-
-
-  cd $HOME
-}
-
-selectiveInstall() {
+selectiveInstall ()
+{
   whiptail --title "Package chooser" --checklist --separate-output \
     "What packages do you wish to install?" 20 78 15 \
     "bins" "Install binaries" off \
@@ -416,7 +494,6 @@ selectiveInstall() {
         ;;
     esac
   done < results
-
 }
 
 if [  "$#" -lt 1  ]
