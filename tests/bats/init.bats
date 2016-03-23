@@ -17,10 +17,11 @@ SCRIPT="./init"
   [ $status -eq 0 ]
 }
 
-# @test "Check if Chrome is properly installed" {
-#   run $SCRIPT installChrome
-#   [ $status -eq 0 ]
-# }
+@test "Check if Chrome is properly installed" {
+  run $SCRIPT installChrome
+  run bash -c "apt-cache show google-chrome-stable > /dev/null 2>&1"
+  [ $status -eq 0 ]
+}
 
 @test "Check if Docker is installed properly" {
   run $SCRIPT installDocker
@@ -28,20 +29,23 @@ SCRIPT="./init"
   [ $status -eq 0 ]
 }
 
-# @test "Check if dotfiles are sucessfully pulled" {
-#   run $SCRIPT installDotfiles
-#   [ $status -eq 0 ]
-# }
+@test "Check if dotfiles are sucessfully pulled" {
+  run $SCRIPT installDotfiles
+  run bash -c "test -e $HOME/.vimrc"
+  [ $status -eq 0 ]
+}
 
-# @test "Check if Dropbox is successfully installed" {
-#   run $SCRIPT installDropbox
-#   [ $status -eq 0 ]
-# }
+@test "Check if Dropbox is successfully installed" {
+  run $SCRIPT installDropbox
+  run bash -c "apt-cache show dropbox > /dev/null 2>&1"
+  [ $status -eq 0 ]
+}
 
-# @test "Check if Hack font is installed" {
-#   run ls $HOME/.fonts/truetype/Hack*
-#   [ $status -eq 0 ]
-# }
+@test "Check if Hack font is installed" {
+  run ls $HOME/.fonts/truetype/Hack*
+  run bash -c "test -e $HOME/.fonts/truetype/Hack-Regular.ttf > /dev/null 2>&1"
+  [ $status -eq 0 ]
+}
 
 # @test "Check if Hack font zip is removed" {
 #   run ls $HOME/.fonts/truetype/*.zip
