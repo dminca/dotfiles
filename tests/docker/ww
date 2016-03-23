@@ -1,0 +1,20 @@
+#!/bin/bash
+# Docker & Docker Compose wrapper script
+
+clear ()
+{
+  docker rm -f $(docker ps -aq)
+  docker rmi -f $(docker images -aq)
+}
+
+build ()
+{
+  docker-compose build
+}
+
+start ()
+{
+  docker-compose up
+}
+
+"$@"
