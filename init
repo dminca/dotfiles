@@ -231,6 +231,11 @@ installDotfiles() {
 installTask() {
   breakline "Installing tasksh by taskwarrior"
 
+  which tasksh > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] TaskSH has already been installed. Exiting..."
+    exit 1
+  fi
   wget http://taskwarrior.org/download/tasksh-latest.tar.gz --directory-prefix=$DOWNLOADS_DIR
 
   cd $DOWNLOADS_DIR
@@ -260,6 +265,11 @@ installChrome() {
 
   breakline "Installing Google Chrome"
 
+  apt-cache show google-chrome-stable > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Chrome already installed. Exiting..."
+    exit 1
+  fi
   # Install dependencies
   sudo apt-get -y install \
     libxss1 \
