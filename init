@@ -280,15 +280,26 @@ installChrome() {
 installFont() {
   breakline "Pulling the Hack font"
 
+  if [[ -e "$HOME/.fonts/truetype/Hack-Regular.ttf" ]]; then
+    printf "$light_red" "[ERROR] Hack font already installed. Exiting..."
+    exit 1
+  fi
   mkdir -p $HOME/.fonts/truetype
   wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
   unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
 
+  # post-install cleanup
+  rm -rfv $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
 }
 
 installDropbox() {
   breakline "Installing Dropbox"
 
+  apt-cache show dropbox > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Dropbox already installed. Exiting..."
+    exit 1
+  fi
   wget -P $DOWNLOADS_DIR https://linux.dropbox.com/packages/ubuntu/$DROPBOX_VERSION
 
   sudo dpkg -i $DOWNLOADS_DIR/$DROPBOX_VERSION
@@ -380,7 +391,6 @@ clearInstall() {
 
   rm -rfv $REPO_PATH \
          $DOWNLOADS_DIR/tasksh-* \
-         $HOME/.fonts/truetype/Hack-v2_018-ttf.zip \
          $DOWNLOADS_DIR/$DROPBOX_VERSION \
          $DOWNLOADS_DIR/node-v5.1.0-linux-x64*
 }
