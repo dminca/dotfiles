@@ -311,15 +311,9 @@ installNode() {
 
   wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
 
-  # BUG: extract this in $DOWNLOADS_DIR
-  tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz
+  tar xvf $DOWNLOADS_DIR/node-v5.1.0-linux-x64.tar.gz -C $DOWNLOADS_DIR
 
   sudo cp -vr $DOWNLOADS_DIR/node-v5.1.0-linux-x64/* /usr/local/
-
-  # TODO: call the function to check whether the install was a success
-  # or not. If successful show message, else show error.
-
-
 }
 
 installZsh() {
