@@ -6,26 +6,27 @@ SCRIPT="./init"
 # -----------------------------------------------------------------
 # INIT SCRIPT TESTS
 # -----------------------------------------------------------------
-@test "Check if Adobe is installed" {
-  run $SCRIPT installAdobe
-  run bash -c dpkg -l adobereader-enu
-  [ $status -eq 0 ]
-}
-
-# @test "Check if Ansible is properly installed" {
-#   run $SCRIPT installAnsible
+# @test "Check if Adobe is installed" {
+#   run $SCRIPT installAdobe
 #   [ $status -eq 0 ]
 # }
+
+@test "Check if Ansible is properly installed" {
+  $SCRIPT installAnsible
+  run bash -c "which ansible > /dev/null 2>&1"
+  [ $status -eq 0 ]
+}
 
 # @test "Check if Chrome is properly installed" {
 #   run $SCRIPT installChrome
 #   [ $status -eq 0 ]
 # }
 
-# @test "Check if Docker is installed properly" {
-#   run $SCRIPT installDocker
-#   [ $status -eq 0 ]
-# }
+@test "Check if Docker is installed properly" {
+  run $SCRIPT installDocker
+  run bash -c "docker --version > /dev/null 2>&1"
+  [ $status -eq 0 ]
+}
 
 # @test "Check if dotfiles are sucessfully pulled" {
 #   run $SCRIPT installDotfiles
