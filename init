@@ -237,8 +237,8 @@ installTask() {
 
   cmake --version 2>&1 > /dev/null
   if [ "$?" -ne 0 ]; then
-    printf "$light_red" "Could not find cmake."
-    return 1
+    printf "$light_red" "[ERROR] Could not find cmake."
+    exit 1
   fi
 
   cmake -DCMAKE_BUILD_TYPE=release .
@@ -311,7 +311,7 @@ installNode() {
 
   node --version > /dev/null 2>&1
   if [[ $? -eq 0 ]]; then
-    printf "$light_red" "NodeJS already installed. Exiting..."
+    printf "$light_red" "[ERROR] NodeJS already installed. Exiting..."
     exit 1
   fi
   wget -P $DOWNLOADS_DIR https://nodejs.org/dist/v5.1.0/node-v5.1.0-linux-x64.tar.gz
@@ -326,7 +326,7 @@ installZsh() {
 
   which zsh > /dev/null 2>&1
   if [[ $? -eq 0 ]]; then
-    printf "$light_red" "ZSH already installed. Exiting..."
+    printf "$light_red" "[ERROR] ZSH already installed. Exiting..."
   fi
   curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
 
