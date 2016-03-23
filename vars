@@ -1,0 +1,28 @@
+#!/bin/bash
+# variables used in main script and tests
+
+VIM_PATH="$HOME/.vim"
+DOWNLOADS_DIR="$HOME/Downloads"
+REPO_PATH="$DOWNLOADS_DIR/dotfiles"
+DOTFILES_PATH="$REPO_PATH/dotfiles"
+DROPBOX_VERSION="dropbox_2015.10.28_amd64.deb"
+ADOBE_PACKAGE="AdbeRdr9.5.5-1_i386linux_enu.deb"
+declare -a NODE_VERSION=(
+                        'v5.1.0',
+                        'node-v5.1.0-linux-x64'
+                        )
+
+#----------------------------------------------------------------------
+#  HELPER FUNCTIONS
+#----------------------------------------------------------------------
+# ---- COLORS ----
+# Example usage format:
+# printf "$COLOR" "text"
+light_blue='\e[1;94m%s\e[0m\n'
+light_red='\e[1;91m%s\e[0m\n'
+light_green='\e[1;92m%s\e[0m\n'
+light_cyan='\e[1;96m%s\e[0m\n'
+light_yellow='\e[1;93m%s\e[0m\n'
+dark_gray='\e[1;100m%s\e[0m\n'
+
+# -- endcolors --
