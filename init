@@ -298,6 +298,11 @@ installDropbox() {
 installSublime() {
   breakline "Installing Sublime Text 3 build 3065"
 
+  subl --version > /dev/null 2>&1
+  if [[ "$?" -eq 0 ]]; then
+    printf "$light_red" "[ERROR] Sublime already installed. Exiting..."
+    exit 1
+  fi
   wget -P $DOWNLOADS_DIR http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
 
   sudo dpkg -i $DOWNLOADS_DIR/sublime-text_build-3065_amd64.deb
@@ -331,6 +336,7 @@ installZsh() {
   which zsh > /dev/null 2>&1
   if [[ $? -eq 0 ]]; then
     printf "$light_red" "[ERROR] ZSH already installed. Exiting..."
+    exit 1
   fi
   curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
 
@@ -344,6 +350,7 @@ themePaper() {
   apt-cache show paper-gtk-theme > /dev/null 2>&1
   if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] Paper theme already installed. Exiting..."
+    exit 1
   fi
   sudo add-apt-repository -y ppa:snwh/pulp
 
@@ -358,6 +365,7 @@ themeNumix() {
   apt-cache show numix-icon-theme > /dev/null 2>&1
   if [[ "$?" -eq 0 ]]; then
     printf "$light_red" "[ERROR] Numix theme already installed. Exiting..."
+    exit 1
   fi
   sudo apt-add-repository -y ppa:numix/ppa
 
