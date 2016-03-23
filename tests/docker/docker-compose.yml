@@ -1,7 +1,7 @@
 app:
   build: .
   volumes:
-    - ./../../dotfiles:/dotfiles
+    - ./../../../dotfiles:/dotfiles
   working_dir: /dotfiles
   command: bats tests/bats
   restart: always
