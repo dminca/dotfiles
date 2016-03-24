@@ -3,5 +3,4 @@ app:
   volumes:
     - ./../../../dotfiles:/dotfiles
   working_dir: /dotfiles
-  command: bats tests/bats
-  restart: always
+  command: ./init installDocker
