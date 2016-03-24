@@ -18,6 +18,8 @@ installAdobe ()
 {
   # if the file wasn't downloaded
   if [[ ! -e "$DOWNLOADS_DIR/$ADOBE_PACKAGE" ]]; then
+    sudo apt-get install -y libxml2
+
     # grab the .deb
     wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/$ADOBE_PACKAGE -P $DOWNLOADS_DIR
 
