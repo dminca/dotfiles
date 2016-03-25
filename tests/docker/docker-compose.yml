@@ -3,7 +3,7 @@ app:
   volumes:
     - ./../../../dotfiles:/dotfiles
   working_dir: /dotfiles
-  tty: true
-  # command: bats tests/bats
+  # tty: true
+  command: bats tests/bats
   env_file:
     - ./../../vars.env
