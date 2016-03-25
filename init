@@ -200,7 +200,7 @@ installTask ()
 
   cmake --version 2>&1 > /dev/null
   if [ "$?" -ne 0 ]; then
-    printf "$light_red" "[ERROR] Could not find cmake."
+    printf "$light_yellow" "[WARNING] 'cmake' not found. Installing..."
     sudo apt-get install -y cmake
   fi
 
