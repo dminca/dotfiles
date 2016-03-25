@@ -266,9 +266,15 @@ installZsh ()
 {
   breakline "Installing Zshell (zsh)"
 
-  curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
+  if [[ ! -d "$DOWNLOADS_DIR" ]]; then
+    printf "$light_yellow" "[WARNING] $DOWNLOADS_DIR not created. Creating..."
+    mkdir -v $DOWNLOADS_DIR
+  fi
+  sudo apt-get install -y zsh # required by the Zsh installer
 
-  sh $HOME/Downloads/install.sh
+  curl -L http://install.ohmyz.sh > $DOWNLOADS_DIR/install.sh
+
+  sh $DOWNLOADS_DIR/install.sh
 }
 
 #-------------------------------------------------------------------------

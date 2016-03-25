@@ -12,13 +12,22 @@ build ()
   docker-compose build
 }
 
+# -----------------------------------
+# Launch 5 instances of app
+# to run parallel tests
+# -----------------------------------
 start ()
 {
   build
-
-  # launch 5 instances of app
-  # to run parallel tests
   docker-compose scale app=5
+}
+
+# -------------------------------------
+# bring the machines in pristine state
+# -------------------------------------
+restart()
+{
+  docker-compose restart
 }
 
 "$@"
