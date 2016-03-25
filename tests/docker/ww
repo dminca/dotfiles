@@ -15,7 +15,10 @@ build ()
 start ()
 {
   build
-  docker-compose up
+
+  # launch 5 instances of app
+  # to run parallel tests
+  docker-compose scale app=5
 }
 
 "$@"
