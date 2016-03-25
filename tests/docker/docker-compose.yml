@@ -4,6 +4,6 @@ app:
     - ./../../../dotfiles:/dotfiles
   working_dir: /dotfiles
   tty: true
-  # command: bats tests/bats/hackfont.bats
+  # command: bats tests/bats/nodejs.bats
   env_file:
     - ./../../vars.env
