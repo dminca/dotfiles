@@ -12,6 +12,12 @@ build ()
   docker-compose build
 }
 
+test ()
+{
+  docker-compose scale app=1
+  docker-compose up
+}
+
 # -----------------------------------
 # Launch 5 instances of app
 # to run parallel tests

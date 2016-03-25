@@ -58,13 +58,13 @@ installChrome ()
     libindicator7
 
   # Fetch the Chrome acrhive
-  sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  wget -P $DOWNLOADS_DIR https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
   # Install Chrome
-  sudo dpkg -i google-chrome*.deb
+  sudo dpkg -i $DOWNLOADS_DIR/google-chrome*.deb
 
   # Cleanup
-  sudo rm -f google-chrome-stable_current_amd64.deb
+  sudo rm -f $DOWNLOADS_DIR/google-chrome-stable_current_amd64.deb
 }
 
 # setup docker
@@ -114,8 +114,10 @@ installFont ()
   breakline "Pulling the Hack font"
 
   mkdir -p $HOME/.fonts/truetype
-  wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
-  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
+  wget -P $HOME/.fonts/truetype \
+          https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip \
+          --no-clobber # don't download twice
+  unzip -u $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
 
   # post-install cleanup
   rm -rfv $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
@@ -198,11 +200,7 @@ installTask ()
 
   cd tasksh-*
 
-  cmake --version 2>&1 > /dev/null
-  if [ "$?" -ne 0 ]; then
-    printf "$light_yellow" "[WARNING] 'cmake' not found. Installing..."
-    sudo apt-get install -y cmake
-  fi
+  sudo apt-get install -y cmake
 
   cmake -DCMAKE_BUILD_TYPE=release .
 
