@@ -149,7 +149,7 @@ installPkgs ()
                           xclip \
                           python-gpgme \
                           gnome-disk-utility \
-                          unrar \
+                          build-essential \
                           postgresql \
                           postgresql-contrib \
                           nodejs \
@@ -165,8 +165,7 @@ installPkgs ()
                           dtrx \
                           zsh \
                           python-pip \
-                          python-dev \
-                          build-essential
+                          python-dev
 
   sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
@@ -202,7 +201,7 @@ installTask ()
   cmake --version 2>&1 > /dev/null
   if [ "$?" -ne 0 ]; then
     printf "$light_red" "[ERROR] Could not find cmake."
-    exit 1
+    sudo apt-get install -y cmake
   fi
 
   cmake -DCMAKE_BUILD_TYPE=release .
