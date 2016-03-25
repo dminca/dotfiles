@@ -3,7 +3,7 @@
 # Copyright (C) 2015 Minca Daniel Andrei - All Rights Reserved
 # Permission to copy and modify is granted under the GPL V2 license
 set -euo pipefail
-source vars
+source "vars.env"
 
 breakline ()
 {
@@ -18,7 +18,7 @@ installAdobe ()
 {
   # if the file wasn't downloaded
   if [[ ! -e "$DOWNLOADS_DIR/$ADOBE_PACKAGE" ]]; then
-    sudo apt-get install -y libxml2
+    #TODO: libxml2 misses on some Linux OS's
 
     # grab the .deb
     wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/$ADOBE_PACKAGE -P $DOWNLOADS_DIR
@@ -87,6 +87,10 @@ installDotfiles ()
 {
   breakline "Copying and configuring dotfiles"
 
+  if [[ ! -d "$DOWNLOADS_DIR" ]]; then
+    printf "$light_yellow" "No $DOWNLOADS_DIR. Creating now"
+    mkdir $DOWNLOADS_DIR
+  fi
   git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
 
   cp -fv $DOTFILES_PATH/.taskrc \

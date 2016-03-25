@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-source vars
+source "vars.env"
 
 @test "Check if SublimeText is properly installed" {
   run $SCRIPT installSublime

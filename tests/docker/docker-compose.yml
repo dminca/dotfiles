@@ -3,4 +3,7 @@ app:
   volumes:
     - ./../../../dotfiles:/dotfiles
   working_dir: /dotfiles
-  command: ./init installDocker
+  tty: true
+  # command: bats tests/bats/hackfont.bats
+  env_file:
+    - ./../../vars.env

@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-source vars
+source "vars.env"
 
 @test "Check if the memory cleanup if done properly" {
   run $SCRIPT cleanup_memory

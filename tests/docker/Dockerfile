@@ -12,4 +12,5 @@ RUN add-apt-repository ppa:duggan/bats --yes \
                           git \
                           vim \
                           wget \
-                          curl
+                          curl \
+                          unzip

@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-source vars
+source "vars.env"
 
 @test "Check if Docker is installed properly" {
   run $SCRIPT installDocker

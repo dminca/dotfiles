@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-source vars
+source "vars.env"
 
 # unable to locate package libxml2
 @test "Check if Adobe is installed" {
