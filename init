@@ -125,11 +125,8 @@ installNode ()
 {
   breakline "Installing Node (latest)"
 
-  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/${NODE_VERSION[0]}/${NODE_VERSION[1]}.tar.gz
-
-  tar xvf $DOWNLOADS_DIR/${NODE_VERSION[1]}.tar.gz -C $DOWNLOADS_DIR
-
-  sudo cp -vr $DOWNLOADS_DIR/${NODE_VERSION[1]}/* /usr/local/
+  sudo apt-get update -qq
+  sudo apt-get install -y nodejs npm
 }
 
 # Install libraries
