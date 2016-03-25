@@ -1,0 +1,39 @@
+#!/bin/bash
+# Docker & Docker Compose wrapper script
+
+clear ()
+{
+  docker rm -f $(docker ps -aq)
+  docker rmi -f $(docker images -aq)
+}
+
+build ()
+{
+  docker-compose build
+}
+
+test ()
+{
+  docker-compose scale app=1
+  docker-compose up
+}
+
+# -----------------------------------
+# Launch 5 instances of app
+# to run parallel tests
+# -----------------------------------
+start ()
+{
+  build
+  docker-compose scale app=5
+}
+
+# -------------------------------------
+# bring the machines in pristine state
+# -------------------------------------
+restart()
+{
+  docker-compose restart
+}
+
+"$@"

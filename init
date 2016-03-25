@@ -3,7 +3,7 @@
 # Copyright (C) 2015 Minca Daniel Andrei - All Rights Reserved
 # Permission to copy and modify is granted under the GPL V2 license
 set -euo pipefail
-source vars
+source "vars.env"
 
 breakline ()
 {
@@ -18,6 +18,8 @@ installAdobe ()
 {
   # if the file wasn't downloaded
   if [[ ! -e "$DOWNLOADS_DIR/$ADOBE_PACKAGE" ]]; then
+    #TODO: libxml2 misses on some Linux OS's
+
     # grab the .deb
     wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/$ADOBE_PACKAGE -P $DOWNLOADS_DIR
 
@@ -56,13 +58,13 @@ installChrome ()
     libindicator7
 
   # Fetch the Chrome acrhive
-  sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  wget -P $DOWNLOADS_DIR https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
   # Install Chrome
-  sudo dpkg -i google-chrome*.deb
+  sudo dpkg -i $DOWNLOADS_DIR/google-chrome*.deb
 
   # Cleanup
-  sudo rm -f google-chrome-stable_current_amd64.deb
+  sudo rm -f $DOWNLOADS_DIR/google-chrome-stable_current_amd64.deb
 }
 
 # setup docker
@@ -72,7 +74,7 @@ installDocker ()
   breakline "Installing Docker"
     
   curl -sSL https://get.docker.com/ | sh
-  sudo usermod -aG docker $USER
+  sudo usermod -aG docker $(whoami)
 
 
   # Install docker-compose
@@ -85,6 +87,10 @@ installDotfiles ()
 {
   breakline "Copying and configuring dotfiles"
 
+  if [[ ! -d "$DOWNLOADS_DIR" ]]; then
+    printf "$light_yellow" "No $DOWNLOADS_DIR. Creating now"
+    mkdir $DOWNLOADS_DIR
+  fi
   git clone https://github.com/dminca/dotfiles.git $DOWNLOADS_DIR/dotfiles
 
   cp -fv $DOTFILES_PATH/.taskrc \
@@ -108,8 +114,10 @@ installFont ()
   breakline "Pulling the Hack font"
 
   mkdir -p $HOME/.fonts/truetype
-  wget -P $HOME/.fonts/truetype https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip
-  unzip $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
+  wget -P $HOME/.fonts/truetype \
+          https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip \
+          --no-clobber # don't download twice
+  unzip -u $HOME/.fonts/truetype/Hack-v2_018-ttf.zip -d $HOME/.fonts/truetype/
 
   # post-install cleanup
   rm -rfv $HOME/.fonts/truetype/Hack-v2_018-ttf.zip
@@ -119,11 +127,8 @@ installNode ()
 {
   breakline "Installing Node (latest)"
 
-  wget -P $DOWNLOADS_DIR https://nodejs.org/dist/${NODE_VERSION[0]}/${NODE_VERSION[1]}.tar.gz
-
-  tar xvf $DOWNLOADS_DIR/${NODE_VERSION[1]}.tar.gz -C $DOWNLOADS_DIR
-
-  sudo cp -vr $DOWNLOADS_DIR/${NODE_VERSION[1]}/* /usr/local/
+  sudo apt-get update -qq
+  sudo apt-get install -y nodejs npm
 }
 
 # Install libraries
@@ -146,7 +151,7 @@ installPkgs ()
                           xclip \
                           python-gpgme \
                           gnome-disk-utility \
-                          unrar \
+                          build-essential \
                           postgresql \
                           postgresql-contrib \
                           nodejs \
@@ -162,8 +167,7 @@ installPkgs ()
                           dtrx \
                           zsh \
                           python-pip \
-                          python-dev \
-                          build-essential
+                          python-dev
 
   sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
@@ -196,11 +200,7 @@ installTask ()
 
   cd tasksh-*
 
-  cmake --version 2>&1 > /dev/null
-  if [ "$?" -ne 0 ]; then
-    printf "$light_red" "[ERROR] Could not find cmake."
-    exit 1
-  fi
+  sudo apt-get install -y cmake
 
   cmake -DCMAKE_BUILD_TYPE=release .
 
@@ -253,7 +253,7 @@ installWireshark ()
 
   sudo apt-get install -y wireshark
   sudo groupadd wireshark
-  sudo usermod -a -G wireshark $USER
+  sudo usermod -a -G wireshark $(whoami)
   sudo chgrp wireshark /usr/bin/dumpcap
   sudo chmod 750 /usr/bin/dumpcap
   sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
@@ -264,9 +264,15 @@ installZsh ()
 {
   breakline "Installing Zshell (zsh)"
 
-  curl -L http://install.ohmyz.sh > $HOME/Downloads/install.sh
+  if [[ ! -d "$DOWNLOADS_DIR" ]]; then
+    printf "$light_yellow" "[WARNING] $DOWNLOADS_DIR not created. Creating..."
+    mkdir -v $DOWNLOADS_DIR
+  fi
+  sudo apt-get install -y zsh # required by the Zsh installer
 
-  sh $HOME/Downloads/install.sh
+  curl -L http://install.ohmyz.sh > $DOWNLOADS_DIR/install.sh
+
+  sh $DOWNLOADS_DIR/install.sh
 }
 
 #-------------------------------------------------------------------------
@@ -343,7 +349,7 @@ selectiveInstall ()
         installAdobe
         ;;
       ansible)
-        which gedit > /dev/null 2>&1
+        which ansible > /dev/null 2>&1
         if [[ "$?" -eq 0 ]]; then
           printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
           exit 1
