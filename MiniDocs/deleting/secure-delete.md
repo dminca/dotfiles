@@ -20,4 +20,5 @@ $ srm -rf pathname
 * the 2nd `-l` lessons the security even more: only one random pass is written
 
 > source: http://askubuntu.com/a/122562/343191
+
 > More info can also be found on srm manpage. There you can also find documentation for `sfill`, `sswap` and `sdmem`
