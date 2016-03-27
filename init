@@ -322,157 +322,31 @@ themeNumix ()
 
 selectiveInstall ()
 {
-  whiptail --title "Package chooser" --checklist --separate-output \
+  PACKAGES=$(whiptail --title "Package chooser" --checklist --separate-output \
     "What packages do you wish to install?" 20 78 15 \
-    "adobeReader" "Install Adobe Reader" off \
-    "ansible" "Install Ansible for DevOps" off \
-    "chrome" "Just install the Chrome browser" off \
-    "docker" "Install Docker tools" off \
-    "dotfiles" "Pull the dotfiles and set them up" off \
-    "dropbox" "Install Dropbox file sync" off \
-    "font" "Install the Hack font for terminal" off \
-    "bins" "Install binaries" off \
-    "numix" "Material Design icon theme for Unix" off \
-    "paper" "Paper Material Design theme for Unix" off \
-    "sublime" "Install Sublime Text 3 Full" off \
-    "tasker" "Install tasksh by TaskWarrior" off \
-    "cleanupMem" "Issue a cleanup memory operation" off \
-    "vim" "Pull vim plugins and .vimrc" off \
+    "installAdobe" "Install Adobe Reader" off \
+    "installAnsible" "Install Ansible for DevOps" off \
+    "installChrome" "Just install the Chrome browser" off \
+    "installDocker" "Install Docker tools" off \
+    "installDotfiles" "Pull the dotfiles and set them up" off \
+    "installDropbox" "Install Dropbox file sync" off \
+    "installFont" "Install the Hack font for terminal" off \
+    "installPkgs" "Install binaries" off \
+    "themeNumix" "Material Design icon theme for Unix" off \
+    "themePaper" "Paper Material Design theme for Unix" off \
+    "installSublime" "Install Sublime Text 3 Full" off \
+    "installTask" "Install tasksh by TaskWarrior" off \
+    "cleanup_memory" "Issue a cleanup memory operation" off \
+    "installVim" "Pull vim plugins and .vimrc" off \
     "installWireshark" "Install Wireshark packet analyser" off \
-    "nodeJS" "Fetch & install NodeJS" off \
-    "zsh" "Another Bash for your terminal" off 2>results
+    "installNode" "Fetch & install NodeJS" off \
+    "installZsh" "Another Bash for your terminal" off 3>&1 1>&2 2>&3)
 
-  while read choice
-  do
-    case $choice in
-      adobeReader)
-        installAdobe
-        ;;
-      ansible)
-        which ansible > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Ansible already installed. Exiting..."
-          exit 1
-        fi
-        installAnsible
-        ;;
-      chrome)
-        apt-cache show google-chrome-stable > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Chrome already installed. Exiting..."
-          exit 1
-        fi
-        installChrome
-        ;;
-      docker)
-        which docker > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Docker already installed. Exiting..."
-          exit 1
-        fi
-        installDocker
-        ;;
-      dotfiles)
-        if [[ -e "$HOME/.vimrc" && -e "$HOME/.bashrc" && -e "$HOME/.tmux.conf" ]]; then
-          printf "$light_red" "[ERROR] Dotfiles have already been copied. Exiting..."
-          exit 1
-        fi
-        installDotfiles
-        ;;
-      dropbox)
-        apt-cache show dropbox > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Dropbox already installed. Exiting..."
-          exit 1
-        fi
-        installDropbox
-        ;;
-      font)
-        if [[ -e "$HOME/.fonts/truetype/Hack-Regular.ttf" ]]; then
-          printf "$light_red" "[ERROR] Hack font already installed. Exiting..."
-          exit 1
-        fi
-        installFont
-        ;;
-      bins)
-        installPkgs
-        ;;
-      numix)
-        apt-cache show numix-icon-theme > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Numix theme already installed. Exiting..."
-          exit 1
-        fi
-        themeNumix
-        ;;
-      paper)
-        apt-cache show paper-gtk-theme > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Paper theme already installed. Exiting..."
-          exit 1
-        fi
-        themePaper
-        ;;
-      sublime)
-        subl --version > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Sublime already installed. Exiting..."
-          exit 1
-        fi
-        installSublime
-        ;;
-      tasker)
-        which tasksh > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] TaskSH has already been installed. Exiting..."
-          exit 1
-        fi
-        installTask
-        ;;
-      cleanupMem)
-        dpkg -l 'linux-*' > /dev/null 2>&1
-        if [[ $? -ne 0 ]]; then
-          printf "$light_red" "No linux headers...exiting"
-          exit 1
-        fi
-        cleanup_memory
-        ;;
-      vim)
-        if [[ -d "$VIM_PATH" ]]; then
-          printf "$light_red" "[ERROR] Vim has already been configured"
-          exit 1
-        fi
-        installVim
-        ;;
-      installWireshark)
-        which wireshark > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] Wireshark already installed. Exiting..."
-          exit 1
-        fi
-        installWireshark
-        ;;
-      nodeJS)
-        node --version > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] NodeJS already installed. Exiting..."
-          exit 1
-        fi
-        installNode
-        ;;
-      zsh)
-        which zsh > /dev/null 2>&1
-        if [[ "$?" -eq 0 ]]; then
-          printf "$light_red" "[ERROR] ZSH already installed. Exiting..."
-          exit 1
-        fi
-        installZsh
-        ;;
-      *)
-        echo "Nothing selected, exiting.."
-        ;;
-    esac
-  done < results
+  if [[ $? = 0 ]]; then
+    for p in $PACKAGES; do
+      $p
+    done
+  fi
 }
 
 if [  "$#" -lt 1  ]
