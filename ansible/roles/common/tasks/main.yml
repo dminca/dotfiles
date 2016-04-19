@@ -1,22 +1,18 @@
 ---
+- name: update packages
+  become: yes
+  become_method: sudo
+  apt: upgrade=dist update_cache=yes
 
-- name: Install VIM
-  hosts: all
-  tasks:
-    - name: "Install VIM via yum"
-      yum:
-        name: vim-enhanced
-        state: installed
-      when: ansible_os_family == "RedHat"
-
-    - name: "Install VIM via apt"
-      apt:
-        name: vim
-        state: installed
-      when: ansible_os_family == "Debian"
-
-    - name: "Unexpected OS family"
-      debug:
-        msg: "OS Family {{ ansible_os_family }} is not supported"
-        fail: yes
-      when: ansible_os_family != "RedHat" and ansible_os_family != "Debian"
+- name: install libraries using APT
+  apt: name={{ item }} state=latest
+  become: yes
+  become_method: sudo
+  with_items:
+    - vim
+    - openvpn
+    - openssh-server
+    - cmake
+    - curl
+    - xclip
+    - tree
