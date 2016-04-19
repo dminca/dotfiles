@@ -1,6 +1,6 @@
 ---
 
-- name: "Install VIM"
+- name: Install VIM
   hosts: all
   tasks:
     - name: "Install VIM via yum"
@@ -10,7 +10,7 @@
       when: ansible_os_family == "RedHat"
 
     - name: "Install VIM via apt"
-      apt: 
+      apt:
         name: vim
         state: installed
       when: ansible_os_family == "Debian"
