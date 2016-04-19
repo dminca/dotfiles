@@ -1,0 +1,22 @@
+---
+
+- name: "Install VIM"
+  hosts: all
+  tasks:
+    - name: "Install VIM via yum"
+      yum:
+        name: vim-enhanced
+        state: installed
+      when: ansible_os_family == "RedHat"
+
+    - name: "Install VIM via apt"
+      apt: 
+        name: vim
+        state: installed
+      when: ansible_os_family == "Debian"
+
+    - name: "Unexpected OS family"
+      debug:
+        msg: "OS Family {{ ansible_os_family }} is not supported"
+        fail: yes
+      when: ansible_os_family != "RedHat" and ansible_os_family != "Debian"
