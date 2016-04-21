@@ -9,10 +9,33 @@
   become: yes
   become_method: sudo
   with_items:
-    - vim
-    - openvpn
-    - openssh-server
-    - cmake
-    - curl
-    - xclip
-    - tree
+  - vim
+  - tmux
+  - git
+  - openvpn
+  - openssh-server
+  - task
+  - cmake
+  - curl
+  - keepass2
+  - xdotool
+  - xclip
+  - python-gpgme
+  - gnome-disk-utility
+  - build-essential
+  - postgresql
+  - postgresql-contrib
+  - nodejs
+  - npm
+  - tree
+  - audacious
+  - silversearcher-ag
+  - gnupg-agent
+  - enigmail
+  - secure-delete
+  - clamav
+  - lnav
+  - dtrx
+  - zsh
+  - python-pip
+  - python-dev
