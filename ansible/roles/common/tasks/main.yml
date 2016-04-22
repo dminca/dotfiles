@@ -1,0 +1,41 @@
+---
+- name: update packages
+  become: yes
+  become_method: sudo
+  apt: upgrade=dist update_cache=yes
+
+- name: install libraries using APT
+  apt: name={{ item }} state=latest
+  become: yes
+  become_method: sudo
+  with_items:
+  - vim
+  - tmux
+  - git
+  - openvpn
+  - openssh-server
+  - task
+  - cmake
+  - curl
+  - keepass2
+  - xdotool
+  - xclip
+  - python-gpgme
+  - gnome-disk-utility
+  - build-essential
+  - postgresql
+  - postgresql-contrib
+  - nodejs
+  - npm
+  - tree
+  - audacious
+  - silversearcher-ag
+  - gnupg-agent
+  - enigmail
+  - secure-delete
+  - clamav
+  - lnav
+  - dtrx
+  - zsh
+  - python-pip
+  - python-dev
