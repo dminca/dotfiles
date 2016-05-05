@@ -1,10 +1,11 @@
-# Git user configuration file
-# @author Minca Daniel Andrei <mandrei17@gmail.com>
-
 [user]
-  name = "Minca Daniel Andrei"
-  email = "mandrei17@gmail.com"
-  signingkey = 81DF875D
-
+	name = Minca Daniel Andrei
+	email = mandrei17@gmail.com
+	signingkey = 81DF875D
 [commit]
-  gpgsign = true
+	gpgsign = true
+	template = /home/dminca/.git-commit-template.commit
+[core]
+	editor = vim
+[push]
+	default = simple
