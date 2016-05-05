@@ -273,6 +273,9 @@ installZsh ()
   curl -L http://install.ohmyz.sh > $DOWNLOADS_DIR/install.sh
 
   sh $DOWNLOADS_DIR/install.sh
+
+  cp -vfr $REPO_PATH/custom $HOME/.oh-my-zsh/
+  cp -v $REPO_PATH/dotfiles/.zshrc $HOME
 }
 
 #-------------------------------------------------------------------------
