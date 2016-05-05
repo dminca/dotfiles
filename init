@@ -97,6 +97,7 @@ installDotfiles ()
      $DOTFILES_PATH/.bashrc \
      $DOTFILES_PATH/.tmux.conf \
      $DOTFILES_PATH/.bash_aliases \
+     $DOTFILES_PATH/.gitconfig \
      $DOTFILES_PATH/.gemrc $HOME/
 }
 
