@@ -1,4 +1,4 @@
-# Customized snippets
+# Your snippets
 #
 # Atom snippets allow you to enter a simple prefix in the editor and hit tab to
 # expand the prefix into a larger code block with templated values.
@@ -20,10 +20,20 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 '.source.shell':
-  'Function title':
-    'prefix': 'sht'
+  'Function comments':
+    'prefix': 'fn'
+    'body': """
+# == FUNCTION =================================================================
+#        NAME: $1
+# DESCRIPTION: $2
+# =============================================================================
+$3
+"""
+  'Section comments':
+    'prefix': 'sec'
     'body': """
 # -----------------------------------------------------------------------------
 # $1
 # -----------------------------------------------------------------------------
+$3
 """
