@@ -72,7 +72,7 @@ installDocker ()
 {
 
   breakline "Installing Docker"
-    
+
   curl -sSL https://get.docker.com/ | sh
   sudo usermod -aG docker $(whoami)
 
@@ -178,15 +178,18 @@ installSublime ()
 {
   breakline "Installing Sublime Text 3 build 3065"
 
-  wget -P $DOWNLOADS_DIR http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3065_amd64.deb
+  wget -P $DOWNLOADS_DIR ${SUBLIME_DATA[0]}
 
-  sudo dpkg -i $DOWNLOADS_DIR/sublime-text_build-3065_amd64.deb
+  sudo dpkg -i $DOWNLOADS_DIR/${SUBLIME_DATA[1]}
 
-  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text http://cl.ly/1z0S25150Y0I/sublime_text%20crack%20linux%2064%20build%203065
+  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text ${SUBLIME_DATA[2]}
 
   chmod u+x $DOWNLOADS_DIR/sublime_text
 
   sudo mv -v $DOWNLOADS_DIR/sublime_text /opt/sublime_text/
+
+  # post-install cleanup
+  rm -rf $SUBLIME_DATA[1]
 }
 
 installTask ()
@@ -220,23 +223,23 @@ installVim ()
            $VIM_PATH/bundle \
            $VIM_PATH/snippets \
            $HOME/vimBackups
-           
+
   breakline "Pulling VIM repositories"
 
   # Pathogen
   curl -LSso $VIM_PATH/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-  
+
   # NerdTree
   git clone https://github.com/scrooloose/nerdtree.git $VIM_PATH/bundle/nerdtree.vim
-  
+
   # SnipMate
   git clone https://github.com/tomtom/tlib_vim.git $VIM_PATH/bundle/tlib_vim
   git clone https://github.com/MarcWeber/vim-addon-mw-utils.git $VIM_PATH/bundle/vim-addon-mw-utils
   git clone https://github.com/garbas/vim-snipmate.git $VIM_PATH/bundle/vim-snipmate
-  
+
   # CtrlP
   git clone https://github.com/kien/ctrlp.vim.git $VIM_PATH/bundle/ctrlp.vim
-  
+
   # CtrlSF
   git clone https://github.com/dyng/ctrlsf.vim.git $VIM_PATH/bundle/ctrlsf.vim
 
