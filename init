@@ -178,11 +178,11 @@ installSublime ()
 {
   breakline "Installing Sublime Text 3 build 3065"
 
-  wget -P $DOWNLOADS_DIR $SUBLIME_DATA[0]
+  wget -P $DOWNLOADS_DIR ${SUBLIME_DATA[0]}
 
-  sudo dpkg -i $DOWNLOADS_DIR/$SUBLIME_DATA[1]
+  sudo dpkg -i $DOWNLOADS_DIR/${SUBLIME_DATA[1]}
 
-  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text $SUBLIME_DATA[3]
+  wget -P $DOWNLOADS_DIR -O $DOWNLOADS_DIR/sublime_text ${SUBLIME_DATA[2]}
 
   chmod u+x $DOWNLOADS_DIR/sublime_text
 
