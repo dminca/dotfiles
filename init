@@ -139,6 +139,8 @@ installPkgs ()
 
   sudo apt-get update
 
+  installKeeWeb
+
   sudo apt-get install -y vim \
                           tmux \
                           git \
@@ -147,7 +149,6 @@ installPkgs ()
                           task \
                           cmake \
                           curl \
-                          keepass2 \
                           xdotool \
                           xclip \
                           python-gpgme \
@@ -172,6 +173,14 @@ installPkgs ()
 
   sudo pip install --upgrade pip
   sudo pip install --upgrade virtualenv
+}
+
+installKeeWeb()
+{
+  breakline "Installing required KeeWeb -- password manager"
+
+  wget -P $DOWNLOADS_DIR https://github.com/antelle/keeweb/releases/download/v1.1.4/KeeWeb.linux.x64.deb
+  sudo dpkg -i $DOWNLOADS_DIR/KeeWeb.linux.x64.deb
 }
 
 installSublime ()
