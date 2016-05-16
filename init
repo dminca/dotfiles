@@ -310,7 +310,8 @@ clearInstall ()
   rm -rfv $REPO_PATH \
          $DOWNLOADS_DIR/tasksh-* \
          $DOWNLOADS_DIR/$DROPBOX_VERSION \
-         $DOWNLOADS_DIR/node-v5.1.0-linux-x64*
+         $DOWNLOADS_DIR/node-v5.1.0-linux-x64* \
+         $DOWNLOADS_DIR/KeeWeb.linux.x64.deb
 }
 
 # extra packages for design
