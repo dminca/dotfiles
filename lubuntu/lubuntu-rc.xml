@@ -497,7 +497,7 @@
     </keybind>
     <keybind key="W-t">
       <action name="Execute">
-        <command>/home/dminca/Downloads/Telegram/Telegram</command>
+        <command>dbus-launch ~/Downloads/Telegram/Telegram start</command>
       </action>
     </keybind>
     <keybind key="W-s">
