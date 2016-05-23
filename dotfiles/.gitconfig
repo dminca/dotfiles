@@ -9,3 +9,5 @@
 	editor = vim
 [push]
 	default = simple
+[status]
+  submoduleSummary = true
