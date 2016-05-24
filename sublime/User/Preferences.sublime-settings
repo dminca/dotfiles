@@ -9,10 +9,16 @@
 		"Markdown",
 		"Vintage"
 	],
+	"indent_guide_options":
+	[
+		"draw_normal",
+		"draw_active"
+	],
 	"index_files": true,
+	"overlay_scroll_bars": "enabled",
 	"rulers":
 	[
-		72
+		80
 	],
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
