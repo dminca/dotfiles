@@ -487,7 +487,7 @@
     </keybind>
     <keybind key="W-k">
       <action name="Execute">
-        <command>KeeWeb</command>
+        <command>keepass2</command>
       </action>
     </keybind>
     <keybind key="W-e">
@@ -507,7 +507,7 @@
     </keybind>
     <keybind key="W-w">
       <action name="Execute">
-        <command>firefox</command>
+        <command>x-www-browser</command>
       </action>
     </keybind>
     <keybind key="W-r">

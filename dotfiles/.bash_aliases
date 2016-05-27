@@ -48,7 +48,6 @@ alias gcb='git checkout -b'
 alias gcf='git config --list'
 alias gcl='git clone --recursive'
 
-alias gcs='git checkout staging' 
 alias gcmsg='git commit -m'
 alias gco='git checkout'
 alias gcount='git shortlog -sn'
