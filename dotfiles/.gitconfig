@@ -9,7 +9,6 @@
 	editor = vim
   logallrefupdates = true
   sharedRepository = 0644
-  pager = 'less $LESS -R'
   compression = 9
 [push]
 	default = simple
