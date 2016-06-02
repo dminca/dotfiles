@@ -7,6 +7,10 @@
 	template = /home/dminca/.git-commit-template.commit
 [core]
 	editor = vim
+  logallrefupdates = true
+  sharedRepository = 0644
+  pager = 'less $LESS -R'
+  compression = 9
 [push]
 	default = simple
 [status]
@@ -15,3 +19,15 @@
   submodule = log
 [fetch]
   recurseSubmodules = on-demand
+[receive]
+  fsckObjects = true
+  denyDeletes = true
+  denyDeleteCurrent = true
+  denyCurrentBranch = true
+  denyNonFastForwards = true
+[merge]
+  log = true
+[rebase]
+  stat = true
+[color]
+  ui = auto
