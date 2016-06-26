@@ -175,14 +175,6 @@ installPkgs ()
   sudo pip install --upgrade virtualenv
 }
 
-installKeeWeb()
-{
-  breakline "Installing required KeeWeb -- password manager"
-
-  wget -P $DOWNLOADS_DIR https://github.com/antelle/keeweb/releases/download/v1.1.4/KeeWeb.linux.x64.deb
-  sudo dpkg -i $DOWNLOADS_DIR/KeeWeb.linux.x64.deb
-}
-
 installSublime ()
 {
   breakline "Installing Sublime Text 3 build 3065"
