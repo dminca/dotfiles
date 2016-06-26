@@ -113,7 +113,7 @@ compdef _git glp=git-log
 
 alias gm='git merge'
 alias gmt='git mergetool --no-prompt'
-alias gmtvim='git mergetool --no-prompt --tool=vimdiff'
+alias gmtvim='git mergetool --no-prompt --tool=meld'
 
 alias gp='git push'
 alias gpd='git push --dry-run'
@@ -149,7 +149,7 @@ alias gstp='git stash pop'
 alias gsts='git stash show --text'
 alias gsu='git submodule update'
 
-alias gts='git tag -s'
+alias gts='git tag -suma'
 alias gtn='git tag -n'
 
 alias gup='git pull --rebase'
